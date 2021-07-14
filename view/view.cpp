@@ -23,3 +23,7 @@ function<void(unsigned int)> View::get_Notification() noexcept {
         }
     };
 }
+
+void View::set_ClickOnCell_Cmd( std::function< bool (uint32_t, uint32_t)>&& cmd) noexcept {
+    ClickOnCell_Cmd = move(cmd);
+}
