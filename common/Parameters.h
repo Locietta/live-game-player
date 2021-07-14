@@ -3,12 +3,10 @@
 
 enum { CLICK_ID, RIGHT_CLICK_ID };
 
-class Parameters
-{
+class Parameters {
 public:
     Parameters();
     ~Parameters();
 };
-
 
 #endif // _PARAMETERS_H_
