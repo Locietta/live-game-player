@@ -1,12 +1,5 @@
 #include "Notification.h"
 
-
-void Notification::Trigger(unsigned int ID)
-{
-    vector< function<void(unsigned int)> >::iterator i = FuncVec.begin();
-    for(i; i != FuncVec.end(); i++)
-    {
-        (*i)(ID);
-    }
+void Notification::Trigger(uint32_t id) {
+    for (auto & i : FuncVec) { i(id); }
 }
-
