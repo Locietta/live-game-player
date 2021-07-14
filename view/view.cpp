@@ -1,6 +1,5 @@
 #include "view.h"
 #include <iostream>
-
 using namespace std;
 
 enum { CLICK_ID, RIGHT_CLICK_ID };

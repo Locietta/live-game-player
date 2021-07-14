@@ -20,17 +20,22 @@ static const int32_t CellSize = 15;
 
 
 
-
+//-------------------------------------------------
+// MyCell means a little square (white or black)
 class MyCell: public Fl_Box
 {
 public:
-    MyCell(int x, int y, int w, int h): Fl_Box(FL_FREE_BOXTYPE, x, y, w, h, "") { color(FL_WHITE); }
+    MyCell(int x, int y, int w, int h, int row, int col);
     ~MyCell() override = default;
     int handle(int event) override;
+private:
+    int32_t row;
+    int32_t col;
 };
 
 
-
+//-------------------------------------------------
+// the Field is a matrix of Cells
 class LifeField
 {
 public:
@@ -43,7 +48,8 @@ private:
 };
 
 
-
+//-----------------------------------------------------------------
+// GUI should include the Field and other buttons
 class GameGUI
 {
 public:
@@ -56,7 +62,8 @@ private:
     Fl_Window* MainWindow;
 };
 
-
+//------------------------------------------------------------------
+// a drawing function that defines the type of Cell
 void cell_draw(int x, int y, int w, int h, Fl_Color c);
 
 #endif

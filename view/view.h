@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <cstdint>
+#include "GameGUI.h"
 #include "Notification.h"
 
 class View {
@@ -12,11 +13,15 @@ public:
 
     void click_callback();
 
+    // let command = xxx
     void set_xx_command(std::function<void (uint32_t)>&& cmd) noexcept;
-    std::function<void(uint32_t)> get_Notification() noexcept;
+
+    // viewmodel notifies view to redraw
+    std::function<void(uint32_t)> get_Notification() noexcept;  
 
 private:
-    int graphic_temp = 0;
+    GameGUI GUI;
+
     std::function<void (uint32_t)> xx_command;
 };
 

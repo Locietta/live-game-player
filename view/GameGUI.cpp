@@ -2,8 +2,7 @@
 
 int MyCell::handle(int event)
 {
-    //int ret = Fl_Box::handle(event);
-    int ret = 1;    // return non zero to receive drag
+    int ret = 1;    // this return value may be modified to suit the function "DRAG"
 
     switch(event)
     {
@@ -11,6 +10,7 @@ int MyCell::handle(int event)
             if(color() == FL_BLACK) color(FL_WHITE);
             else    color(FL_BLACK);
             redraw(); 
+            // update matrix in model
         break;
 
         default:
@@ -38,7 +38,7 @@ LifeField::LifeField(int32_t x, int32_t y, int32_t size, int32_t edge):
     for(int i=0; i<size; i++)
         for(int j=0; j<size; j++)
         {
-            Matrix[i][j] = new MyCell(x+j*edge, y+i*edge, edge, edge);
+            Matrix[i][j] = new MyCell(x+j*edge, y+i*edge, edge, edge, i, j);
         }
 }
 
@@ -50,3 +50,13 @@ GameGUI::GameGUI():
     UserArea = new LifeField(XField, YField, CellSize, CellNum);
     MainWindow->end();
 }
+
+
+MyCell::MyCell(int x, int y, int w, int h, int row, int col): 
+    Fl_Box(FL_FREE_BOXTYPE, x, y, w, h, ""),
+    row( row ),
+    col( col )
+{ 
+    color(FL_WHITE);
+}
+
