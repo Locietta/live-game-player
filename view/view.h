@@ -10,7 +10,7 @@ public:
     View() = default;
     ~View() = default;
 
-    void click_callback(void);
+    void click_callback();
 
     void set_xx_command(std::function<void (uint32_t)>&& cmd) noexcept;
     std::function<void(uint32_t)> get_Notification() noexcept;
