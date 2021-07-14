@@ -1,7 +1,10 @@
 #include <iostream>
 #include <memory>
 #include "Notification.h"
-#include "total.h"
+#include "model.h"
+#include "viewmodel.h"
+#include "view.h"
+
 using namespace std;
 
 int main(int, char **) {
@@ -17,7 +20,7 @@ int main(int, char **) {
 
 
     cout << "start mouse click" << endl;
-    ViewPtr->callback();
+    ViewPtr->click_callback();
 
     
 
