@@ -16,7 +16,7 @@ int main(int, char **) {
     ViewPtr->set_xx_command( ViewModelPtr->get_xx_command() );
     ViewModelPtr->set_xx_ModelCmd( ModelPtr->get_model_modification() );
     ViewPtr->set_ClickOnCell_Cmd([](uint32_t a, uint32_t b)->bool {
-        cout << "receive length & width" << a << " " << b << endl;
+        cout << "receive row & col " << a << " " << b << endl;
         return true;
     });
 

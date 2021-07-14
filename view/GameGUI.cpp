@@ -35,12 +35,11 @@ void cell_draw(int x, int y, int w, int h, Fl_Color c)
 }
 
 
-LifeField::LifeField(int32_t x, int32_t y, int32_t ColNum, int32_t RowNum, int32_t edge, std::function< bool (uint32_t, uint32_t)> ClickTrigger):
+LifeField::LifeField(int32_t x, int32_t y, int32_t ColNum, int32_t RowNum, int32_t edge):
     row_n( RowNum ),
     col_n( ColNum ),
     Matrix( RowNum, std::vector<MyCell*>(ColNum, nullptr) )
 {
-    MyCell::ClickTrigger = ClickTrigger;
     for(int i=0; i<row_n; i++)
         for(int j=0; j<col_n; j++)
         {
@@ -54,7 +53,7 @@ GameGUI::GameGUI():
 {
     Fl::set_boxtype(FL_FREE_BOXTYPE, cell_draw, 0, 0, 0, 0);
     MainWindow->begin();
-    UserArea = new LifeField(XField, YField, ColCellNum, RowCellNum, CellSize, ClickOnCell_Cmd);
+    UserArea = new LifeField(XField, YField, ColCellNum, RowCellNum, CellSize);
     MainWindow->end();
 }
 
@@ -65,5 +64,10 @@ MyCell::MyCell(int x, int y, int w, int h, int row, int col):
     col( col )
 { 
     color(FL_WHITE);
+}
+
+void GameGUI::set_ClickOnCell_Cmd( std::function< bool (uint32_t, uint32_t)>&& cmd ) noexcept
+{
+    MyCell::ClickTrigger = move(cmd);
 }
 

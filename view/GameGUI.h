@@ -42,7 +42,7 @@ private:
 class LifeField
 {
 public:
-    LifeField(int32_t x, int32_t y, int32_t ColNum, int32_t RowNum, int32_t edge, std::function< bool (uint32_t, uint32_t)> ClickTrigger);
+    LifeField(int32_t x, int32_t y, int32_t ColNum, int32_t RowNum, int32_t edge);
     ~LifeField() = default;
 
 private:
@@ -61,6 +61,7 @@ public:
     ~GameGUI() = default;
     void show(){ MainWindow->show(); }
     uint32_t GetMatrixSize(){ return ColCellNum; } // return the size of matrix ( number of cells )
+    void set_ClickOnCell_Cmd( std::function< bool (uint32_t, uint32_t)>&& cmd) noexcept;
 
 private:
     LifeField* UserArea;
