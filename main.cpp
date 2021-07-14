@@ -4,6 +4,7 @@
 #include "model.h"
 #include "viewmodel.h"
 #include "view.h"
+#include "GameGUI.h"
 
 using namespace std;
 

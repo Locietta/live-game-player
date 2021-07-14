@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-enum { CLICK_ID, RIGHT_CLICK_ID };
+
 
 void View::click_callback(void) {
     cout << "this is a call back" << endl; 

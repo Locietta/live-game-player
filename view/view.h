@@ -3,26 +3,29 @@
 
 #include <functional>
 #include <cstdint>
-#include "GameGUI.h"
 #include "Notification.h"
+
+enum { CLICK_ID, RIGHT_CLICK_ID, ClickOnCell }; // CLICK_ID, RIGHT_CLICK_ID for test, can be deleted later
 
 class View {
 public:
     View() = default;
     ~View() = default;
 
-    void click_callback();
+    void click_callback(); // can be deleted later
 
     // let command = xxx
     void set_xx_command(std::function<void (uint32_t)>&& cmd) noexcept;
+    void set_ClickOnCell_Cmd( std::function< bool (uint32_t, uint32_t)>&& cmd) noexcept;
 
     // viewmodel notifies view to redraw
     std::function<void(uint32_t)> get_Notification() noexcept;  
 
-private:
-    GameGUI GUI;
+protected:
+    std::function< bool (uint32_t, uint32_t)> ClickOnCell_Cmd;
 
     std::function<void (uint32_t)> xx_command;
+
 };
 
 #endif // _VIEW_H_
