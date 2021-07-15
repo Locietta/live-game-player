@@ -1,6 +1,5 @@
 #include <iostream>
 #include <memory>
-
 #include "GameGUI.h"
 #include "Notification.h"
 #include "model.h"
