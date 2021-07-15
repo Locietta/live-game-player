@@ -13,8 +13,8 @@ int main(int, char **) {
 	//*class members
 	shared_ptr<GameGUI> GUIPtr = make_shared<GameGUI>();
 	shared_ptr<ViewModel> ViewModelPtr = make_shared<ViewModel>();
-	size_t tmp = 30;
-	shared_ptr<Model> ModelPtr( new Model(tmp, GUIPtr->get_Notification_UpdateCell()) );
+	//size_t tmp = 30;
+    shared_ptr<Model> ModelPtr = make_shared<Model>(GUIPtr->GetMatrixSize(), GUIPtr->get_Notification_UpdateCell());
 
 	// ViewPtr->set_xx_command( ViewModelPtr->get_xx_command() );
 	//ViewModelPtr->set_xx_ModelCmd(ModelPtr->get_model_modification());

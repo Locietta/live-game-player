@@ -52,6 +52,7 @@ bool Model::Initalize_Random(size_t height, size_t width) {
 			changecolor(i, j, (*m_TwoDMat)[i][j]);
 		}
 	}
+	//cout << (*m_TwoDMat)[0][0] << endl;
 
 	// Trigger(0);
 	return true;
@@ -81,8 +82,8 @@ bool Model::Run(int step) {
 
 bool Model::Draw(size_t row_idx, size_t col_idx) {
 	assert(row_idx < MAXSIZE && col_idx < MAXSIZE);
-	(*m_TwoDMat)[row_idx][col_idx] = true;
-	changecolor(row_idx, col_idx, (*m_TwoDMat)[row_idx][col_idx]);
+	cout << (*m_TwoDMat)[row_idx][col_idx] << "turn to" << !(*m_TwoDMat)[row_idx][col_idx] << endl;
+	(*m_TwoDMat)[row_idx][col_idx] = ! (*m_TwoDMat)[row_idx][col_idx];
 	return true;
 }
 
