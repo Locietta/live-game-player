@@ -4,32 +4,15 @@
 #include <cstdint>
 #include <functional>
 #include <memory>
-
+#include "./../common/TwoDMat.h"
 #include "./../common/notification/Notification.h"
 #include "assert.h"
-#define MAXSIZE 1920
 
-template<typename T>
-class TwoDMat {
-	size_t m_width;
-	size_t m_height;
-	T* buf;
 
-   public:
-	TwoDMat(){};
-	~TwoDMat() { delete[] buf; }
-	TwoDMat(size_t height, size_t width) : m_width(width), m_height(height) {
-		assert(m_width <= MAXSIZE && m_height <= MAXSIZE);
-		buf = new T[m_width * m_height];
-	}
-	T* operator[](int row) { return buf + m_width * row; }
-
-	friend class Model;
-};
 
 class Model : public Notification {
    public:
-	Model(size_t length, std::function<void(uint32_t, uint32_t, bool)> &&cmd);
+	Model(size_t length, std::function<void(uint32_t, uint32_t, bool)>&& cmd);
 	~Model() = default;
 
 	std::function<void(uint32_t)> get_model_modification() noexcept;
@@ -41,8 +24,8 @@ class Model : public Notification {
 	void Set_ChangeColor(std::function<void(uint32_t, uint32_t, bool)>&& notify) { changecolor = move(notify); };
 
    private:
-	shared_ptr<TwoDMat<bool>> m_TwoDMat;
-	shared_ptr<TwoDMat<bool>> m_Next2DMat;
+	TwoDMat<bool> m_TwoDMat;
+	TwoDMat<bool> m_Next2DMat;
 
 	std::function<void(uint32_t, uint32_t, bool)> changecolor;
 };
