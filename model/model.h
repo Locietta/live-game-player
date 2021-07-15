@@ -1,18 +1,6 @@
 #ifndef _MODEL_H_
 #define _MODEL_H_
 
-<<<<<<< HEAD
-#include "Notification.h"
-#include <cstdint>
-#include <functional>
-
-class Model : public Notification {
-public:
-    Model() = default;
-    ~Model() = default;
-
-    std::function<void(uint32_t)> get_model_modification() noexcept;
-=======
 #include <cstdint>
 #include <functional>
 #include <memory>
@@ -57,7 +45,6 @@ class Model : public Notification {
 	shared_ptr<TwoDMat<bool>> m_Next2DMat;
 
 	std::function<void(uint32_t, uint32_t, bool)> changecolor;
->>>>>>> pr_5
 };
 
 #endif	// _MODEL_H_

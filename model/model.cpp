@@ -3,14 +3,6 @@
 #include <assert.h>
 
 #include <iostream>
-<<<<<<< HEAD
-function<void(uint32_t)> Model::get_model_modification() noexcept {
-    return [this](uint32_t id) {
-        std::cout << "model update" << std::endl;
-        Trigger(id);
-    };
-}
-=======
 #include <random>
 
 Model::Model(size_t length, std::function<void(uint32_t, uint32_t, bool)> &&cmd) {
@@ -98,4 +90,3 @@ bool Model::Draw(size_t row_idx, size_t col_idx) {
 shared_ptr<TwoDMat<bool>> Model::Get_Bool2DMat() {
 	return m_TwoDMat;
 }
->>>>>>> pr_5
