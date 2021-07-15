@@ -1,9 +1,9 @@
 #ifndef _GAMEGUI_H_
 #define _GAMEGUI_H_
-#include <FL\Fl.H>
-#include <FL\Fl_Window.H>
-#include <FL\Fl_Box.H>
-#include <FL\fl_draw.H>
+#include <FL/Fl.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Box.H>
+#include <FL/fl_draw.H>
 #include <cstdlib>
 #include <vector>
 #include "view.h"
