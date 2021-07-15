@@ -1,14 +1,14 @@
 #include "ViewCells.h"
 std::function< bool (uint32_t, uint32_t)> MyCell::ClickTrigger;
 
-std::function<void(uint32_t, uint32_t, bool)> ViewCells::get_Notification_UpdateCell() noexcept
+/* std::function<void(uint32_t, uint32_t, bool)> ViewCells::get_Notification_UpdateCell() noexcept
 {
     return [this](uint32_t row, uint32_t col, bool state)
     {
         Matrix[row][col]->color( (state==true)? FL_BLACK: FL_WHITE ); 
     };
     //return SetColor;
-}
+} */
 
 
 // unused in this project
@@ -70,5 +70,44 @@ MyCell::MyCell(int x, int y, int w, int h, int row, int col):
     col( col )
 { 
     color(FL_WHITE);
+}
+
+
+
+void ViewCells::BindColor(std::unique_ptr<  std::vector< std::vector<bool> >> OutMatrix)
+{
+    ColorMatrix = move(OutMatrix);
+    UpdateCells();
+}
+
+
+void ViewCells::UpdateCells()
+{
+    for(int i=0; i<row_n; i++)
+        for(int j=0; j<col_n; j++)
+        {
+            if( (*ColorMatrix)[i][j] == true )
+                Matrix[i][j]->color(FL_BLACK);
+            else
+                Matrix[i][j]->color(FL_WHITE);
+            Matrix[i][j]->redraw();
+        }
+}
+
+
+std::function<void(uint32_t)> ViewCells::Get_Notification() noexcept
+{
+    return [this](uint32_t UpdateID)
+    {
+        switch(UpdateID)
+        {
+            case ProperID_ColorMatrix_Update:
+                UpdateCells();
+            break;
+
+            default:
+            break;
+        }
+    };
 }
 
