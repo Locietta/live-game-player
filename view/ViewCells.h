@@ -6,13 +6,15 @@
 #include <FL\fl_draw.H>
 #include <functional>
 #include <vector>
+#include <memory>
+#include "EventDef.h"
 
 //--------------------location and size of field----------------
-const int32_t XField = 0;
-const int32_t YField = 0;
-const int32_t RowCellNum = 30;
-const int32_t ColCellNum = 30;
-const int32_t CellSize = 15;
+static const int32_t XField = 0;
+static const int32_t YField = 0;
+static const int32_t RowCellNum = 30;
+static const int32_t ColCellNum = 30;
+static const int32_t CellSize = 15;
 
 
 //-------------------------------------------------
@@ -42,15 +44,20 @@ public:
 
     void set_ClickOnCell_Cmd( std::function< bool (uint32_t, uint32_t)>&& cmd) noexcept;
 
-    // viewmodel notifies view to redraw
-    //std::function<void(uint32_t)> get_Notification() noexcept;  
-    std::function<void(uint32_t, uint32_t, bool)> get_Notification_UpdateCell() noexcept;
+    void BindColor(std::unique_ptr<  std::vector< std::vector<bool> >> OutMatrix);
+    std::function<void(uint32_t)> Get_Notification() noexcept;
 
 private:
     std::vector< std::vector<MyCell*> > Matrix;
+    std::unique_ptr<  std::vector< std::vector<bool> > > ColorMatrix;
+    void UpdateCells();
     int32_t row_n;
     int32_t col_n;
 };
+
+
+
+
 
 //------------------------------------------------------------------
 // a drawing function that defines the type of Cell
