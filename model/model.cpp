@@ -82,7 +82,7 @@ bool Model::Run(int step) {
 
 bool Model::Draw(size_t row_idx, size_t col_idx) {
 	assert(row_idx < MAXSIZE && col_idx < MAXSIZE);
-	cout << (*m_TwoDMat)[row_idx][col_idx] << "turn to" << !(*m_TwoDMat)[row_idx][col_idx] << endl;
+	cout << (*m_TwoDMat)[row_idx][col_idx] << " turn to " << !(*m_TwoDMat)[row_idx][col_idx] << endl;
 	(*m_TwoDMat)[row_idx][col_idx] = ! (*m_TwoDMat)[row_idx][col_idx];
 	return true;
 }
