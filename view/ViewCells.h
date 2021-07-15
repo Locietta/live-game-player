@@ -8,11 +8,11 @@
 #include <vector>
 
 //--------------------location and size of field----------------
-static const int32_t XField = 0;
-static const int32_t YField = 0;
-static const int32_t RowCellNum = 30;
-static const int32_t ColCellNum = 30;
-static const int32_t CellSize = 15;
+const int32_t XField = 0;
+const int32_t YField = 0;
+const int32_t RowCellNum = 30;
+const int32_t ColCellNum = 30;
+const int32_t CellSize = 15;
 
 
 //-------------------------------------------------

@@ -29,7 +29,7 @@ class TwoDMat {
 
 class Model : public Notification {
    public:
-	Model(size_t length);
+	Model(size_t length, std::function<void(uint32_t, uint32_t, bool)> &&cmd);
 	~Model() = default;
 
 	std::function<void(uint32_t)> get_model_modification() noexcept;

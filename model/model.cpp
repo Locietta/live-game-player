@@ -5,7 +5,8 @@
 #include <iostream>
 #include <random>
 
-Model::Model(size_t length) {
+Model::Model(size_t length, std::function<void(uint32_t, uint32_t, bool)> &&cmd) {
+	Set_ChangeColor(move(cmd));
 	Initalize_Random(length, length);
 }
 
