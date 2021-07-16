@@ -9,17 +9,11 @@
 #include <cstdlib>
 #include <vector>
 
-
-//--------------------size of main window-----------------------
-static const int32_t WindowWidth = 500;
-static const int32_t WindowHeight = 500;
-static const char *WindowTitle = "Conway Life Game";
-
 //-----------------------------------------------------------------
 // GUI should include the Field and other buttons
 class GameGUI {
 public:
-    GameGUI();
+    GameGUI(uint32_t width, uint32_t height, const char *title);
     ~GameGUI() = default;
     void show() { MainWindow->show(); }
     void BindColor(std::unique_ptr<TwoDMat<bool>> OutMatrix);

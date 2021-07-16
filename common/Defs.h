@@ -3,11 +3,11 @@
 
 #include <cstdint>
 
-inline const int32_t RowCellNum = 30;
-inline const int32_t ColCellNum = 30;
+inline const int32_t defaultRowNum = 30;
+inline const int32_t defaultColNum = 30;
 
 enum{
-    ProperID_ColorMatrix_Update
+    PropID_ColorMatrix
 };
 
 #endif // _DEFS_H_

@@ -19,7 +19,7 @@ class Model : public Notification {
 
 	bool init();  //< random init map
 	bool Run(int step);
-	bool Draw(size_t row_idx, size_t col_idx);
+	bool changeState(size_t row_idx, size_t col_idx);
 	unique_ptr<TwoDMat<bool>> Get_Bool2DMat();
 
    private:

@@ -16,13 +16,12 @@ public:
     ~ViewModel() = default;
 
     std::function<void(uint32_t)> get_Notification() noexcept;
-
-    std::function<bool(uint32_t, uint32_t)> get_InitRdmCmd();
-    std::function<bool(int)> get_Run_N_Time_Cmd();
-    std::function<bool(uint32_t, uint32_t)> get_DrawCmd();
-
     unique_ptr<TwoDMat<bool>> Get2DBoolMat();
     void LinkToModel(const shared_ptr<Model> &spModel);
+
+    std::function<bool(uint32_t, uint32_t)> get_DrawCmd();
+    // std::function<bool(uint32_t, uint32_t)> get_InitRdmCmd();
+    // std::function<bool(int)> get_Run_N_Time_Cmd();
 
 private:
     shared_ptr<Model> m_spModel;

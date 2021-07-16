@@ -1,6 +1,7 @@
 #include "GameGUI.h"
 
-GameGUI::GameGUI() : MainWindow(new Fl_Window(WindowWidth, WindowHeight, WindowTitle)) {
+GameGUI::GameGUI(uint32_t width, uint32_t height, const char *title)
+: MainWindow(new Fl_Window(width, height, title)) {
     Fl::set_boxtype(FL_FREE_BOXTYPE, cell_draw, 0, 0, 0, 0);
     MainWindow->begin();
     UserArea = new ViewCells(XField, YField, CellSize);

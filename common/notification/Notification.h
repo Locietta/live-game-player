@@ -1,5 +1,5 @@
-#ifndef NOTIFICATION_H
-#define NOTIFICATION_H
+#ifndef _NOTIFICATION_H_
+#define _NOTIFICATION_H_
 #include <cstdint>
 #include <functional>
 #include <vector>
@@ -21,4 +21,4 @@ private:
     vector<function<void(uint32_t)>> FuncVec;
 };
 
-#endif
+#endif // _NOTIFICATION_H_

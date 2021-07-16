@@ -44,13 +44,12 @@ public:
     void set_ClickOnCell_Cmd(std::function<bool(uint32_t, uint32_t)> &&cmd) noexcept;
 
     void BindColor(std::unique_ptr<TwoDMat<bool>> OutMatrix);
+    void UpdateCells(Fl_Window *MainWindow);
 
 private:
     std::vector<std::vector<MyCell>> Matrix;
     std::unique_ptr<TwoDMat<bool>> ColorMatrix;
     int32_t x, y, edge;
-    friend class GameGUI;
-    void UpdateCells(Fl_Window *MainWindow);
 };
 
 //------------------------------------------------------------------
