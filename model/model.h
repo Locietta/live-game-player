@@ -12,16 +12,15 @@
 
 class Model : public Notification {
    public:
-	Model(size_t length, std::function<void(uint32_t, uint32_t, bool)>&& cmd);
+	Model();
 	~Model() = default;
 
 	std::function<void(uint32_t)> get_model_modification() noexcept;
 
-	bool Initalize_Random(size_t width, size_t height);
+	bool init();  //< random init map
 	bool Run(int step);
 	bool Draw(size_t row_idx, size_t col_idx);
-	shared_ptr<TwoDMat<bool>> Get_Bool2DMat();
-	void Set_ChangeColor(std::function<void(uint32_t, uint32_t, bool)>&& notify) { changecolor = move(notify); };
+	unique_ptr<TwoDMat<bool>> Get_Bool2DMat();
 
    private:
 	TwoDMat<bool> m_TwoDMat;
@@ -30,4 +29,4 @@ class Model : public Notification {
 	std::function<void(uint32_t, uint32_t, bool)> changecolor;
 };
 
-#endif	// _MODEL_H_
+#endif // _MODEL_H_

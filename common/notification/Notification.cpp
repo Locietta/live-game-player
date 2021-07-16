@@ -1,11 +1,11 @@
 #include "Notification.h"
 
 void Notification::Add(function<void(uint32_t)> &&f) {
-    FuncVec.push_back(move(f));
+    FuncVec.push_back((f));
 }
 
 void Notification::Trigger(uint32_t id) {
-    for (auto &i : FuncVec) {
+    for (const auto &i : FuncVec) {
         i(id);
     }
 }
