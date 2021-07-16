@@ -22,10 +22,6 @@ public:
     GameGUI();
     ~GameGUI() = default;
     void show() { MainWindow->show(); }
-    // uint32_t GetMatrixSize() {
-    //     int ret = ColCellNum;
-    //     return ret;
-    // } // return the size of matrix ( number of cells )
     void BindColor(std::unique_ptr<TwoDMat<bool>> OutMatrix);
     void set_ClickOnCell_Cmd(std::function<bool(uint32_t, uint32_t)> &&cmd) noexcept;
     std::function<void(uint32_t)> Get_Notification() noexcept;

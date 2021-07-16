@@ -12,7 +12,9 @@ void GameGUI::set_ClickOnCell_Cmd(std::function<bool(uint32_t, uint32_t)> &&cmd)
 }
 
 std::function<void(uint32_t)> GameGUI::Get_Notification() noexcept {
-    return UserArea->Get_Notification();
+    return [this](uint32_t) {
+        UserArea->UpdateCells(MainWindow);
+    };
 }
 
 void GameGUI::BindColor(std::unique_ptr<TwoDMat<bool>> OutMatrix) {

@@ -71,10 +71,11 @@ void ViewCells::BindColor(std::unique_ptr<TwoDMat<bool>> OutMatrix) {
     // UpdateCells();
 }
 
-void ViewCells::UpdateCells() {
+void ViewCells::UpdateCells(Fl_Window *MainWindow) {
     const auto &row_n = ColorMatrix->m_height;
     const auto &col_n = ColorMatrix->m_width;
     if ((row_n != Matrix.size()) || (col_n != Matrix[0].size())) {
+        MainWindow->begin();
         Matrix.clear();
         Matrix.resize(row_n);
         for (int i = 0; i < row_n; i++)
@@ -82,6 +83,7 @@ void ViewCells::UpdateCells() {
                 // Matrix[i].push_back({x + j * edge, y + i * edge, edge, edge, i, j});
                 Matrix[i].emplace_back(x + j * edge, y + i * edge, edge, edge, i, j);
             }
+        MainWindow->end();
     }
 
     for (int i = 0; i < row_n; i++)
@@ -94,12 +96,3 @@ void ViewCells::UpdateCells() {
         }
 }
 
-std::function<void(uint32_t)> ViewCells::Get_Notification() noexcept {
-    return [this](uint32_t UpdateID) {
-        switch (UpdateID) {
-        case ProperID_ColorMatrix_Update: UpdateCells(); break;
-
-        default: break;
-        }
-    };
-}

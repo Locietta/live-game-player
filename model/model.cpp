@@ -13,6 +13,7 @@ Model::Model() : m_TwoDMat(RowCellNum, ColCellNum) {}
 bool Model::init() {
     Initalize_Random(m_TwoDMat);
     Trigger(ProperID_ColorMatrix_Update);
+	return true;
 }
 
 auto countBeside = [](size_t i, size_t j, TwoDMat<bool> &Mat) {
