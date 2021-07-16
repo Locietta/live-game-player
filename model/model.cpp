@@ -8,11 +8,11 @@
 
 static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat);
 
-Model::Model() : m_TwoDMat(RowCellNum, ColCellNum) {}
+Model::Model() : m_TwoDMat(defaultRowNum, defaultColNum) {}
 
 bool Model::init() {
     Initalize_Random(m_TwoDMat);
-    Trigger(ProperID_ColorMatrix_Update);
+    Trigger(PropID_ColorMatrix);
 	return true;
 }
 
@@ -66,9 +66,11 @@ bool Model::Run(int step) {
     return true;
 }
 
-bool Model::Draw(size_t row_idx, size_t col_idx) {
+bool Model::changeState(size_t row_idx, size_t col_idx) {
     assert(row_idx < MAXSIZE && col_idx < MAXSIZE);
-    cout << m_TwoDMat[row_idx][col_idx] << " turn to " << !m_TwoDMat[row_idx][col_idx] << endl;
+#ifndef NDEBUG
+    cerr << m_TwoDMat[row_idx][col_idx] << " turn to " << !m_TwoDMat[row_idx][col_idx] << endl;
+#endif
     m_TwoDMat[row_idx][col_idx] = !m_TwoDMat[row_idx][col_idx];
     return true;
 }
