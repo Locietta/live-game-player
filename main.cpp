@@ -19,6 +19,7 @@ int main(int, char **) {
     //*link members
     ViewModelPtr->LinkToModel(ModelPtr);
     GUIPtr->BindColor(ViewModelPtr->Get2DBoolMat());
+    
     //*link command
     GUIPtr->set_ClickOnCell_Cmd(ViewModelPtr->get_DrawCmd());
 

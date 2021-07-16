@@ -68,7 +68,6 @@ MyCell::MyCell(MyCell &&rhs) : Fl_Box(FL_FREE_BOXTYPE, rhs.x, rhs.y, rhs.w, rhs.
 
 void ViewCells::BindColor(std::unique_ptr<TwoDMat<bool>> OutMatrix) {
     ColorMatrix = move(OutMatrix);
-    // UpdateCells();
 }
 
 void ViewCells::UpdateCells(Fl_Window *MainWindow) {
