@@ -16,7 +16,6 @@ void ViewCells::set_ClickOnCell_Cmd(std::function<bool(uint32_t, uint32_t)> &&cm
     MyCell::ClickTrigger = move(cmd);
 }
 
-
 int MyCell::handle(int event) {
     int ret = 1; // this return value may be modified to suit the function "DRAG"
 
@@ -61,10 +60,9 @@ MyCell::MyCell(int x, int y, int w, int h, int row, int col)
     color(FL_WHITE);
 }
 
-MyCell::MyCell(MyCell &&rhs) : Fl_Box(FL_FREE_BOXTYPE, rhs.x, rhs.y, rhs.w, rhs.h, nullptr),
- row(rhs.row), col(rhs.col), x{rhs.x}, y{rhs.y}, w{rhs.w}, h{rhs.h} {
-
-}
+MyCell::MyCell(MyCell &&rhs) noexcept
+    : Fl_Box(FL_FREE_BOXTYPE, rhs.x, rhs.y, rhs.w, rhs.h, nullptr), row(rhs.row),
+      col(rhs.col), x{rhs.x}, y{rhs.y}, w{rhs.w}, h{rhs.h} {}
 
 void ViewCells::BindColor(std::unique_ptr<TwoDMat<bool>> OutMatrix) {
     ColorMatrix = move(OutMatrix);
@@ -94,4 +92,3 @@ void ViewCells::UpdateCells(Fl_Window *MainWindow) {
             Matrix[i][j].redraw();
         }
 }
-
