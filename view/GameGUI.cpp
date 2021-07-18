@@ -5,8 +5,29 @@ GameGUI::GameGUI(uint32_t width, uint32_t height, const char *title):
 {   
     Fl::set_boxtype(FL_FREE_BOXTYPE, cell_draw, 0, 0, 0, 0);
     begin();
+    RandomGenerate = new Fl_Button(xButton, yButtonRG, wButton, hButton, "Randomize");
+    Clear = new Fl_Button(xButton, yButtonClear, wButton, hButton, "Clear");
+    SingleStep = new Fl_Button(xButton, yButtonSS, wButton, hButton, "Single Step");
+    Continue = new Fl_Button(xButton, yButtonConti, wButton, hButton, "Continue");
+    Pause = new Fl_Button(xButton, yButtonPa, wButton, hButton, "Pause");
     UserArea = new ViewCells(XField, YField, CellSize, ViewCells_cb);
     end();
+
+    RandomGenerate->labelsize(20);
+    Clear->labelsize(20);
+    SingleStep->labelsize(20);
+    Continue->labelsize(20);
+    Pause->labelsize(20);
+    RandomGenerate->labelfont(FL_BOLD);
+    Clear->labelfont(FL_BOLD);
+    SingleStep->labelfont(FL_BOLD);
+    Continue->labelfont(FL_BOLD);
+    Pause->labelfont(FL_BOLD);
+    RandomGenerate->callback(Buttons_cb, &RandomCmd);
+    Clear->callback(Buttons_cb, &ClearCmd);
+    SingleStep->callback(Buttons_cb, &SingleStepCmd);
+    Continue->callback(Buttons_cb, &ContinueCmd);
+    Pause->callback(Buttons_cb, &PauseCmd);
 }
 
 ViewCells *GameGUI::Get_ViewCells(){
@@ -15,6 +36,26 @@ ViewCells *GameGUI::Get_ViewCells(){
 
 void GameGUI::Set_ClickOnCell_Cmd(std::function<bool(uint32_t, uint32_t)> &&cmd) noexcept {
     ClickCmd = move(cmd);
+}
+
+void GameGUI::Set_Random_Cmd(std::function<bool()> &&cmd) noexcept{
+    RandomCmd = move(cmd);
+}
+
+void GameGUI::Set_Clear_Cmd(std::function<bool()> &&cmd) noexcept{
+    ClearCmd = move(cmd);
+}
+
+void GameGUI::Set_SingleStep_Cmd(std::function<bool()> &&cmd) noexcept{
+    SingleStepCmd = move(cmd);
+}
+
+void GameGUI::Set_Continue_Cmd(std::function<bool()> &&cmd) noexcept{
+    ContinueCmd = move(cmd);
+}
+
+void GameGUI::Set_Pause_Cmd(std::function<bool()> &&cmd) noexcept{
+    PauseCmd = move(cmd);
 }
 
 std::function<void(uint32_t)> GameGUI::Get_Notification() noexcept {
@@ -29,3 +70,9 @@ void GameGUI::ViewCells_cb(Fl_Widget* cell, void* window)
 {
     ((GameGUI*)window)->ClickCmd( ((MyCell*)cell)->GetRow(), ((MyCell*)cell)->GetCol() );
 }
+
+void GameGUI::Buttons_cb(Fl_Widget* button, void* cmd)
+{
+    (*static_cast< std::function<bool()>* >(cmd))();
+}
+

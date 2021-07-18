@@ -7,8 +7,8 @@ App::App() = default;
 App::~App() = default;
 
 //-------------------- main window info -----------------------
-static const uint32_t WindowWidth = 500;
-static const uint32_t WindowHeight = 500;
+static const uint32_t WindowWidth = 1000;
+static const uint32_t WindowHeight = 800;
 static const char *WindowTitle = "Conway Life Game";
 
 bool App::init() {
