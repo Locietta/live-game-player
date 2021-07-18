@@ -25,13 +25,13 @@ int MyCell::handle(int event) {
 }
 
 //----------------------------------class MyCell-------------------------------
-MyCell::MyCell(uint32_t x, uint32_t y, uint32_t edge, uint32_t row, uint32_t col, Fl_Callback *MyCell_cb)
+MyCell::MyCell(int32_t x, int32_t y, int32_t edge, uint32_t row, uint32_t col, Fl_Callback *MyCell_cb)
     : Fl_Box(FL_FREE_BOXTYPE, x, y, edge, edge, nullptr), coordinate{row, col}, x{x}, y{y}, edge{edge} {
     color(FL_WHITE);
     callback(MyCell_cb);
 }
 
-MyCell::MyCell(MyCell &&rhs)
+MyCell::MyCell(MyCell &&rhs) noexcept
     : Fl_Box(FL_FREE_BOXTYPE, rhs.x, rhs.y, rhs.edge, rhs.edge, nullptr), x{rhs.x}, y{rhs.y}, edge{rhs.edge} {
     coordinate[0] = rhs.coordinate[0];
     coordinate[1] = rhs.coordinate[1];
@@ -41,15 +41,15 @@ MyCell::MyCell(MyCell &&rhs)
 //-----------------------------------------------------------------------------
 
 //----------------------------------class ViewCells-------------------------------
-ViewCells::ViewCells(uint32_t x, uint32_t y, uint32_t edge, Fl_Callback *ViewCell_cb)
+ViewCells::ViewCells(int32_t x, int32_t y, int32_t edge, Fl_Callback *ViewCell_cb)
     : Fl_Group(x, y, edge * defaultColNum, edge * defaultRowNum), x{x}, y{y}, edge{edge} {
     callback(ViewCell_cb);
     CellMatrix.resize(defaultRowNum);
 
     begin();
-    for (uint32_t i = 0; i < defaultRowNum; i++) {
+    for (int32_t i = 0; i < defaultRowNum; i++) {
         CellMatrix[i].resize(defaultColNum);
-        for (uint32_t j = 0; j < defaultColNum; j++) {
+        for (int32_t j = 0; j < defaultColNum; j++) {
             CellMatrix[i][j] = new MyCell(x + j * edge, y + i * edge, edge, i, j, (Fl_Callback *) MyCell_cb);
         }
     }

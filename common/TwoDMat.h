@@ -17,7 +17,7 @@ struct TwoDMat {
         assert(m_width <= MAXSIZE && m_height <= MAXSIZE);
         buf = new T[m_width * m_height];
     }
-    T *operator[](int row) { return buf + m_width * row; }
+    T *operator[](size_t row) { return buf + m_width * row; }
 };
 
 #endif
