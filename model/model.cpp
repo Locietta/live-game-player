@@ -6,13 +6,15 @@
 #include <iostream>
 #include <random>
 
-static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat);
+using namespace std;
+
+static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat,double True_Probility);
 
 Model::Model() : m_TwoDMat(defaultRowNum, defaultColNum) {}
 
-bool Model::init() {
-    Initalize_Random(m_TwoDMat);
-    Trigger(PropID_ColorMatrix);
+bool Model::init(double True_Prob) {
+    Initalize_Random(m_TwoDMat,True_Prob);
+    trigger(PropID_ColorMatrix);
 	return true;
 }
 
@@ -39,7 +41,7 @@ auto countBeside = [](size_t i, size_t j, TwoDMat<bool> &Mat) {
 function<void(uint32_t)> Model::get_model_modification() noexcept {
     return [this](uint32_t id) {
         std::cout << "model update" << std::endl;
-        Trigger(id);
+        trigger(id);
     };
 }
 
@@ -75,16 +77,16 @@ bool Model::changeState(size_t row_idx, size_t col_idx) {
     return true;
 }
 
-unique_ptr<TwoDMat<bool>> Model::Get_Bool2DMat() {
-    return unique_ptr<TwoDMat<bool>>(&m_TwoDMat);
+ref_ptr<TwoDMat<bool>> Model::Get_Bool2DMat() {
+    return ref_ptr<TwoDMat<bool>>(&m_TwoDMat);
 }
 
 /* Private Function Implementations */
 
-static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat) {
+static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat,double True_Probility) {
     std::random_device rd;  // Will be used to obtain a seed for the random number engine
     std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
-    std::uniform_int_distribution<> dis(0, 1);
+    std::bernoulli_distribution dis(True_Probility);
 
     for (int i = 0; i < m_TwoDMat.m_height; i++) {
         for (int j = 0; j < m_TwoDMat.m_width; j++) {
