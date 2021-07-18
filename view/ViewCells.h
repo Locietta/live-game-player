@@ -2,6 +2,7 @@
 #define _VIEWCELLS_H_
 #include "Defs.h"
 #include "TwoDMat.h"
+#include "ref_ptr.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Window.H>
@@ -39,12 +40,12 @@ public:
     ViewCells(uint32_t x, uint32_t y, uint32_t edge, Fl_Callback* ViewCell_cb );
     ~ViewCells() = default;
 
-    void BindColor(std::unique_ptr<TwoDMat<bool>> OutMatrix);
+    void BindColor(ref_ptr<TwoDMat<bool>> OutMatrix);
     void UpdateCells();
 
 private:
     // data
-    std::unique_ptr<TwoDMat<bool>> ColorMatrix;
+    ref_ptr<TwoDMat<bool>> ColorMatrix;
     uint32_t x, y, edge;
 
     // sub-widgets

@@ -14,7 +14,7 @@
 class GameGUI : public Fl_Window{
 public:
     GameGUI(uint32_t width, uint32_t height, const char *title);
-    ~GameGUI() = default;
+    ~GameGUI() override = default;
 
     // bind widget attribute
     ViewCells *Get_ViewCells();

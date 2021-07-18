@@ -1,5 +1,7 @@
 #include "app.h"
 
+using namespace std;
+
 App::App() = default;
 
 App::~App() = default;
@@ -17,8 +19,8 @@ bool App::init() {
     m_ViewModel->LinkToModel(m_Model);
     
     // Notification
-    m_ViewModel->Add(m_GUI->Get_Notification());
-    m_Model->Add(m_ViewModel->get_Notification());
+    m_ViewModel->add(m_GUI->Get_Notification());
+    m_Model->add(m_ViewModel->get_Notification());
     
     // binding
     m_GUI->Get_ViewCells()->BindColor(m_ViewModel->Get2DBoolMat());

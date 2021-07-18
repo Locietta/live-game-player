@@ -3,22 +3,21 @@
 #include <cstdint>
 #include <functional>
 #include <vector>
-using namespace std;
 
 class Notification {
 public:
     Notification() = default;
     ~Notification() = default;
 
-    void Add(function<void(uint32_t)> &&f);
-    void Trigger(uint32_t id);
+    void add(std::function<void(uint32_t)> &&f);
+    void trigger(uint32_t id);
 
     // unused
-    void Remove();
-    void Clear();
+    void remove();
+    void clear();
 
 private:
-    vector<function<void(uint32_t)>> FuncVec;
+    std::vector<std::function<void(uint32_t)>> FuncVec;
 };
 
 #endif // _NOTIFICATION_H_

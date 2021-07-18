@@ -6,7 +6,8 @@
 #include <memory>
 #include "./../common/TwoDMat.h"
 #include "./../common/notification/Notification.h"
-#include "assert.h"
+#include "ref_ptr.h"
+#include <cassert>
 
 
 
@@ -20,7 +21,7 @@ class Model : public Notification {
 	bool init(double Ture_Prob = 0.25);  //< random init map
 	bool Run(int step);
 	bool changeState(size_t row_idx, size_t col_idx);
-	unique_ptr<TwoDMat<bool>> Get_Bool2DMat();
+	ref_ptr<TwoDMat<bool>> Get_Bool2DMat();
 
    private:
 	TwoDMat<bool> m_TwoDMat;
