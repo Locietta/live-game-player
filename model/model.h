@@ -17,7 +17,7 @@ class Model : public Notification {
 
 	std::function<void(uint32_t)> get_model_modification() noexcept;
 
-	bool init();  //< random init map
+	bool init(double Ture_Prob = 0.5);  //< random init map
 	bool Run(int step);
 	bool changeState(size_t row_idx, size_t col_idx);
 	unique_ptr<TwoDMat<bool>> Get_Bool2DMat();
