@@ -12,8 +12,6 @@ add_subdirectory(view)
 add_subdirectory(viewmodel)
 add_subdirectory(app)
 
-link_libraries(common)
-
 add_executable(live-game main.cpp)
 target_link_libraries(live-game PUBLIC app)
 target_include_directories(live-game PUBLIC "${PROJECT_BINARY_DIR}")
