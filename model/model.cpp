@@ -6,12 +6,12 @@
 #include <iostream>
 #include <random>
 
-static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat);
+static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat,double True_Probility);
 
 Model::Model() : m_TwoDMat(defaultRowNum, defaultColNum) {}
 
-bool Model::init() {
-    Initalize_Random(m_TwoDMat);
+bool Model::init(double True_Prob) {
+    Initalize_Random(m_TwoDMat,True_Prob);
     Trigger(PropID_ColorMatrix);
 	return true;
 }
@@ -81,10 +81,10 @@ unique_ptr<TwoDMat<bool>> Model::Get_Bool2DMat() {
 
 /* Private Function Implementations */
 
-static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat) {
+static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat,double True_Probility) {
     std::random_device rd;  // Will be used to obtain a seed for the random number engine
     std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
-    std::uniform_int_distribution<> dis(0, 1);
+    std::bernoulli_distribution dis(True_Probility);
 
     for (int i = 0; i < m_TwoDMat.m_height; i++) {
         for (int j = 0; j < m_TwoDMat.m_width; j++) {
