@@ -53,7 +53,8 @@ void cell_draw(int x, int y, int w, int h, Fl_Color c) {
 //         }
 // }
 
-ViewCells::ViewCells(int32_t x, int32_t y, int32_t edge) : x{x}, y{y}, edge{edge} {}
+ViewCells::ViewCells(int32_t x, int32_t y, int32_t edge) : x{x}, y{y}, edge{edge} {
+}
 
 MyCell::MyCell(int x, int y, int w, int h, int row, int col)
     : Fl_Box(FL_FREE_BOXTYPE, x, y, w, h, ""), row(row), col(col), x{x}, y{y}, w{w}, h{h} {

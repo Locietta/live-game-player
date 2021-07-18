@@ -13,7 +13,7 @@ bool App::init() {
     m_GUI = make_shared<GameGUI>(WindowWidth, WindowHeight, WindowTitle);
     
     m_ViewModel = make_shared<ViewModel>();
-     m_Model = make_shared<Model>();
+    m_Model = make_shared<Model>();
     m_ViewModel->LinkToModel(m_Model);
     
     // Notification
