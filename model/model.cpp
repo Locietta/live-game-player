@@ -84,7 +84,7 @@ unique_ptr<TwoDMat<bool>> Model::Get_Bool2DMat() {
 static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat,double True_Probility) {
     std::random_device rd;  // Will be used to obtain a seed for the random number engine
     std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
-    std::bernoulli_distribution<> dis(True_Probility);
+    std::bernoulli_distribution dis(True_Probility);
 
     for (int i = 0; i < m_TwoDMat.m_height; i++) {
         for (int j = 0; j < m_TwoDMat.m_width; j++) {
