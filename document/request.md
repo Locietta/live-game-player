@@ -4,7 +4,7 @@
 
 ## 系统需求
 
-开发/运行环境：Windows 10
+开发/运行环境：Window10 ArchLinux
 
 ## 功能分析
 
