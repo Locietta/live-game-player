@@ -1,7 +1,7 @@
 #include "model.h"
 #include "Defs.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include <iostream>
 #include <random>

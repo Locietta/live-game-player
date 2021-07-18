@@ -2,14 +2,13 @@
 #define _VIEWCELLS_H_
 #include "Defs.h"
 #include "TwoDMat.h"
-#include <FL\Fl.H>
-#include <FL\Fl_Box.H>
-#include <FL\Fl_Window.H>
-#include <FL\fl_draw.H>
+#include <FL/Fl.H>
+#include <FL/Fl_Box.H>
+#include <FL/Fl_Window.H>
+#include <FL/fl_draw.H>
 #include <functional>
 #include <memory>
 #include <vector>
-
 
 //--------------------location and size of field----------------
 inline const int32_t XField = 0;
