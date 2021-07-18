@@ -1,5 +1,6 @@
 #include "ViewCells.h"
 #include <cassert>
+#include <iostream>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ int MyCell::handle(int event) {
         else
             color(FL_BLACK);
         redraw();
+        cout << "push" << endl;
         break;
 
     default: break;
