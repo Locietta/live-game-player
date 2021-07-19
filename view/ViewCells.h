@@ -2,6 +2,7 @@
 #define _VIEWCELLS_H_
 #include "Defs.h"
 #include "TwoDMat.h"
+#include "ref_ptr.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Window.H>
@@ -11,44 +12,44 @@
 #include <vector>
 
 //--------------------location and size of field----------------
-inline const int32_t XField = 0;
+inline const int32_t XField = 200;
 inline const int32_t YField = 0;
-inline const int32_t CellSize = 15;
+inline const int32_t CellSize = 10;
 
 //-------------------------------------------------
 // MyCell means a little square (white or black)
 class MyCell : public Fl_Box {
 public:
-    MyCell(int x, int y, int w, int h, int row, int col);
-    // MyCell(const MyCell&) = default;
+    MyCell(int32_t x, int32_t y, int32_t edge, uint32_t row, uint32_t col, Fl_Callback *MyCell_cb);
     MyCell(MyCell &&rhs) noexcept;
     ~MyCell() override = default;
     int handle(int event) override;
+    uint32_t GetRow() { return coordinate[0]; }
+    uint32_t GetCol() { return coordinate[1]; }
 
 private:
-    int32_t row;
-    int32_t col;
-    int32_t x, y, w, h;
-    static std::function<bool(uint32_t, uint32_t)> ClickTrigger;
-    friend class ViewCells;
+    uint32_t coordinate[2]; // (row, col)
+    int32_t x, y, edge;
 };
 
 //-------------------------------------------------
 // the Field is a matrix of Cells
-class ViewCells {
+class ViewCells : public Fl_Group {
 public:
-    ViewCells(int32_t x, int32_t y, int32_t edge);
-    ~ViewCells() = default;
+    ViewCells(int32_t x, int32_t y, int32_t edge, Fl_Callback *ViewCell_cb);
+    ~ViewCells() override = default;
 
-    void set_ClickOnCell_Cmd(std::function<bool(uint32_t, uint32_t)> &&cmd) noexcept;
-
-    void BindColor(std::unique_ptr<TwoDMat<bool>> OutMatrix);
-    void UpdateCells(Fl_Window *MainWindow);
+    void BindColor(ref_ptr<TwoDMat<bool>> OutMatrix);
+    void UpdateCells();
 
 private:
-    std::vector<std::vector<MyCell>> Matrix;
-    std::unique_ptr<TwoDMat<bool>> ColorMatrix;
+    // data
+    ref_ptr<TwoDMat<bool>> ColorMatrix;
     int32_t x, y, edge;
+
+    // sub-widgets
+    std::vector<std::vector<MyCell *>> CellMatrix;
+    static void MyCell_cb(Fl_Widget *ptr, void *ViewCellPtr);
 };
 
 //------------------------------------------------------------------

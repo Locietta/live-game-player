@@ -4,7 +4,8 @@
 #include "../common/Defs.h"
 #include "../common/TwoDMat.h"
 #include "../common/notification/Notification.h"
-#include "assert.h"
+#include "ref_ptr.h"
+#include <cassert>
 #include <cstdint>
 #include <fstream>
 #include <functional>
@@ -36,7 +37,7 @@ public:
     bool Load(std::string file_Name);
     bool Save(std::string file_Name);
 
-    unique_ptr<TwoDMat<bool>> Get_Bool2DMat();
+    ref_ptr<TwoDMat<bool>> Get_Bool2DMat();
 
 private:
     double True_Prob;

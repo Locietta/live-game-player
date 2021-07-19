@@ -7,8 +7,8 @@ Model::Model(size_t height, size_t width)
 bool Model::init(double True_Prob) {
     this->True_Prob = True_Prob;
     Randomize(True_Prob);
-    // Initalize_Random(m_TwoDMat, True_Prob);
-    Trigger(PropID_ColorMatrix);
+    //Initalize_Random(m_TwoDMat, True_Prob);
+    trigger(PropID_ColorMatrix);
     return true;
 }
 
@@ -99,15 +99,12 @@ bool Model::Run(int step) {
 
 bool Model::changeState(size_t row_idx, size_t col_idx) {
     assert(row_idx < MAXSIZE && col_idx < MAXSIZE);
-#ifndef NDEBUG
-    cerr << m_TwoDMat[row_idx][col_idx] << " turn to " << !m_TwoDMat[row_idx][col_idx] << endl;
-#endif
     m_TwoDMat[row_idx][col_idx] = !m_TwoDMat[row_idx][col_idx];
     return true;
 }
 
-unique_ptr<TwoDMat<bool>> Model::Get_Bool2DMat() {
-    return unique_ptr<TwoDMat<bool>>(&m_TwoDMat);
+ref_ptr<TwoDMat<bool>> Model::Get_Bool2DMat() {
+    return ref_ptr<TwoDMat<bool>>(&m_TwoDMat);
 }
 
 /* Private Function Implementations */

@@ -40,7 +40,7 @@ struct TwoDMat {
         buf = tmp;
         return ret;
     }
-    T *operator[](int row) { return buf + m_width * row; }
+    T *operator[](size_t row) { return buf + m_width * row; }
 };
 
 #endif

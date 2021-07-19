@@ -11,7 +11,7 @@ function<void(unsigned int)> ViewModel::get_Notification() noexcept {
         switch (id) {
         case PropID_ColorMatrix: {
             cerr << "view model receive notification" << endl;
-            Trigger(PropID_ColorMatrix);
+            trigger(PropID_ColorMatrix);
         } break;
         default: {
         } break;
@@ -19,13 +19,13 @@ function<void(unsigned int)> ViewModel::get_Notification() noexcept {
     };
 }
 
-std::unique_ptr<TwoDMat<bool>> ViewModel::Get2DBoolMat() {
+ref_ptr<TwoDMat<bool>> ViewModel::Get2DBoolMat() {
     return m_spModel->Get_Bool2DMat();
 }
 
 void ViewModel::LinkToModel(const shared_ptr<Model> &spModel) {
     m_spModel = spModel;
-    m_spModel->Add(get_Notification());
+    m_spModel->add(get_Notification());
 }
 
 std::function<bool(uint32_t, uint32_t)> ViewModel::get_DrawCmd() {
