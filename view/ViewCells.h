@@ -1,8 +1,8 @@
 #ifndef _VIEWCELLS_H_
 #define _VIEWCELLS_H_
-#include "Defs.h"
-#include "TwoDMat.h"
-#include "ref_ptr.h"
+#include "../common/Defs.h"
+#include "../common/TwoDMat.h"
+#include "../common/ref_ptr.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Window.H>
@@ -14,7 +14,7 @@
 //--------------------location and size of field----------------
 inline const int32_t XField = 200;
 inline const int32_t YField = 0;
-inline const int32_t CellSize = 10;
+inline const int32_t CellSize = 5;
 
 //-------------------------------------------------
 // MyCell means a little square (white or black)
@@ -39,12 +39,14 @@ public:
     ~ViewCells() override = default;
     int handle(int event) override;
 
-    void BindColor(ref_ptr<TwoDMat<bool>> OutMatrix);
+    void BindColor(ref_ptr<TwoDMat<uint32_t>> OutMatrix);
+    void BindColorMapping(ref_ptr<std::vector<Fl_Color>> mapping);
     void UpdateCells();
 
 private:
     // data
-    ref_ptr<TwoDMat<bool>> ColorMatrix;
+    ref_ptr<TwoDMat<uint32_t>> ColorMatrix;
+    ref_ptr<std::vector<Fl_Color>> ColorMapping;
     int32_t x, y, edge;
 
     // sub-widgets

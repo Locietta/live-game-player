@@ -1,30 +1,6 @@
 #include "viewmodel.h"
-#include "../common/Defs.h"
 
-#include <iostream>
-
-using namespace std;
-
-function<void(unsigned int)> ViewModel::get_Notification() noexcept {
-    return [this](unsigned int id) {
-        switch (id) {
-        case PropID_ColorMatrix: {
-#ifndef NDEBUG
-            cerr << "view model receive notification" << endl;
-#endif
-            trigger(PropID_ColorMatrix);
-        } break;
-        default: {
-        } break;
-        }
-    };
-}
-
-ref_ptr<TwoDMat<bool>> ViewModel::Get2DBoolMat() {
-    return m_spModel->Get_Bool2DMat();
-}
-
-void ViewModel::LinkToModel(const shared_ptr<Model> &spModel) {
+void ViewModel::LinkToModel(const std::shared_ptr<Model> &spModel) {
     m_spModel = spModel;
     m_spModel->add(get_Notification());
 }
@@ -43,4 +19,16 @@ std::function<bool()> ViewModel::get_SingleStepCmd() {
 
 std::function<bool()> ViewModel::get_ClearCmd() {
     return [this]() { return m_spModel->Clear(); };
+}
+
+std::function<void(unsigned int)> ViewModel::get_Notification() noexcept {
+    return [this](unsigned int id) {
+        switch (id) {
+        case PropID_ColorMatrix: {
+            trigger(PropID_ColorMatrix);
+        } break;
+        default: {
+        } break;
+        }
+    };
 }

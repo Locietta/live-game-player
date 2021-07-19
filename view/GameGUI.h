@@ -33,9 +33,9 @@ public:
 
 private:
     // continue state
-    bool isIdle;
+    bool isIdle = true;
     static void Timer(void*);
-    double period;  // T = 1s by default
+    double period = 0.2;  // seconds
 
     // click command
     std::function<bool(uint32_t, uint32_t)> ClickCmd;
