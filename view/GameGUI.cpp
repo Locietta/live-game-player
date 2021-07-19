@@ -4,7 +4,7 @@
 GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     Fl_Double_Window(width, height, title),
     isIdle(true),
-    period(1.0)
+    period(0.3)
 {   
     Fl::set_boxtype(FL_FREE_BOXTYPE, cell_draw, 0, 0, 0, 0);
     begin();
