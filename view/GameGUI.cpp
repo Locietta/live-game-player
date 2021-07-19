@@ -1,7 +1,7 @@
 #include "GameGUI.h"
 
 
-GameGUI::GameGUI(uint32_t width, uint32_t height, const char *title):
+GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     Fl_Window(width, height, title),
     isIdle(true),
     period(1.0)
