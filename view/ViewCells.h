@@ -23,7 +23,6 @@ public:
     MyCell(int32_t x, int32_t y, int32_t edge, uint32_t row, uint32_t col, Fl_Callback *MyCell_cb);
     MyCell(MyCell &&rhs) noexcept;
     ~MyCell() override = default;
-    int handle(int event) override;
     uint32_t GetRow() { return coordinate[0]; }
     uint32_t GetCol() { return coordinate[1]; }
 
