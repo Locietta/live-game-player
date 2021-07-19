@@ -81,7 +81,7 @@ void GameGUI::Buttons_cb(Fl_Widget* button, void* cmd)
 
 void GameGUI::StartTimer_cb(Fl_Widget* button, void* window)
 {
-    GameGUI* GUIptr = static_cast<GameGUI*>(window);
+    auto* GUIptr = static_cast<GameGUI*>(window);
     if(GUIptr->isIdle)
     {
         GUIptr->isIdle = false;
@@ -96,7 +96,7 @@ void GameGUI::StartTimer_cb(Fl_Widget* button, void* window)
 
 void GameGUI::Timer(void* window)
 {
-    GameGUI* GUIptr = static_cast<GameGUI*>(window);
+    auto* GUIptr = static_cast<GameGUI*>(window);
     if(GUIptr->isIdle)
     {
         return;
@@ -111,7 +111,7 @@ void GameGUI::Timer(void* window)
 
 void GameGUI::PauseTimer_cb(Fl_Widget* button, void* window)
 {
-    GameGUI* GUIptr = static_cast<GameGUI*>(window);
+    auto* GUIptr = static_cast<GameGUI*>(window);
     if(GUIptr->isIdle)
     {
         return;
