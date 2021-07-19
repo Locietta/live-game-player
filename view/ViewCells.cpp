@@ -17,11 +17,10 @@ int MyCell::handle(int event) {
         else
             color(FL_BLACK);
         redraw();
-        cout << "push" << endl;
-        break;
+    break;
 
     default: break;
-    }
+    }// end of switch
 
     return ret;
 }
@@ -58,9 +57,34 @@ ViewCells::ViewCells(int32_t x, int32_t y, int32_t edge, Fl_Callback *ViewCell_c
     end();
 }
 
+
+int ViewCells::handle(int event)
+{
+    int ret = 1;
+    int x = 0, y = 0;
+
+    switch(event)
+    {
+    case FL_PUSH:
+        x = (Fl::event_x()-XField)/edge;
+        y = (Fl::event_y()-YField)/edge;
+    break; 
+
+    case FL_DRAG:
+        cout << (Fl::event_x()-XField)/edge << ", " << (Fl::event_y()-YField)/edge << endl;
+    break;
+
+    default: break;
+    }// end of switch
+
+    return ret;
+}
+
+
 void ViewCells::BindColor(ref_ptr<TwoDMat<bool>> OutMatrix) {
     ColorMatrix = move(OutMatrix);
 }
+
 
 void ViewCells::UpdateCells() {
     const auto &row_n = ColorMatrix->m_height;

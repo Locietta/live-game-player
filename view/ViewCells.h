@@ -38,6 +38,7 @@ class ViewCells : public Fl_Group {
 public:
     ViewCells(int32_t x, int32_t y, int32_t edge, Fl_Callback *ViewCell_cb);
     ~ViewCells() override = default;
+    int handle(int event) override;
 
     void BindColor(ref_ptr<TwoDMat<bool>> OutMatrix);
     void UpdateCells();
