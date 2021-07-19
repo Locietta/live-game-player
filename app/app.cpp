@@ -27,6 +27,9 @@ bool App::init() {
     
     // commands
     m_GUI->Set_ClickOnCell_Cmd(m_ViewModel->get_DrawCmd());
+    m_GUI->Set_Clear_Cmd(m_ViewModel->get_ClearCmd());
+    m_GUI->Set_Random_Cmd(m_ViewModel->get_RandomizeCmd());
+    m_GUI->Set_SingleStep_Cmd(m_ViewModel->get_SingleStepCmd());
     return true;
 
 }
