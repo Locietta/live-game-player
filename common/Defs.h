@@ -3,8 +3,8 @@
 
 #include <cstdint>
 
-inline const int32_t defaultRowNum = 80;
-inline const int32_t defaultColNum = 80;
+extern const int32_t defaultRowNum;
+extern const int32_t defaultColNum;
 
 enum{
     PropID_ColorMatrix

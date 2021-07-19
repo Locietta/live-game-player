@@ -20,7 +20,6 @@ MyCell::MyCell(MyCell &&rhs) noexcept
 }
 //-----------------------------------------------------------------------------
 
-
 //----------------------------------class ViewCells-------------------------------
 ViewCells::ViewCells(int32_t x, int32_t y, int32_t edge, Fl_Callback *ViewCell_cb)
     : Fl_Group(x, y, edge * defaultColNum, edge * defaultRowNum), x{x}, y{y}, edge{edge} {
@@ -37,59 +36,54 @@ ViewCells::ViewCells(int32_t x, int32_t y, int32_t edge, Fl_Callback *ViewCell_c
     end();
 }
 
-
-int ViewCells::handle(int event)
-{
+int ViewCells::handle(int event) {
     int ret = 1;
     int x = 0, y = 0;
     static int prev_x = -1, prev_y = -1;
 
-    switch(event)
-    {
+    switch (event) {
     case FL_PUSH:
-        prev_x = x = (Fl::event_x()-XField)/edge;
-        prev_y = y = (Fl::event_y()-YField)/edge;
+        prev_x = x = (Fl::event_x() - XField) / edge;
+        prev_y = y = (Fl::event_y() - YField) / edge;
         CellMatrix[y][x]->do_callback(CellMatrix[y][x], this);
-        if (CellMatrix[y][x]->color() != ColorMapping->back() )
-            CellMatrix[y][x]->color( ColorMapping->back() );
+        if (CellMatrix[y][x]->color() != ColorMapping->back())
+            CellMatrix[y][x]->color(ColorMapping->back());
         else
-            CellMatrix[y][x]->color( ColorMapping->front() );
+            CellMatrix[y][x]->color(ColorMapping->front());
         CellMatrix[y][x]->redraw();
-    break; 
+        break;
 
     case FL_DRAG:
-        x = (Fl::event_x()-XField)/edge;
-        y = (Fl::event_y()-YField)/edge;
-        if(x<0 || x>=CellMatrix[0].size() || y<0 || y>=CellMatrix.size())
-            break;  // offset check
-        if( x != prev_x || y != prev_y )
-        {
+        x = (Fl::event_x() - XField) / edge;
+        y = (Fl::event_y() - YField) / edge;
+        if (x < 0 || x >= CellMatrix[0].size() || y < 0 || y >= CellMatrix.size()) break; // offset check
+        if (x != prev_x || y != prev_y) {
             prev_x = x;
             prev_y = y;
             CellMatrix[y][x]->do_callback(CellMatrix[y][x], this);
-            if (CellMatrix[y][x]->color() != ColorMapping->back() )
-                CellMatrix[y][x]->color( ColorMapping->back() );
-            else
-                CellMatrix[y][x]->color( ColorMapping->front() );
+
+            if (CellMatrix[y][x]->color() == ColorMapping->back())
+                CellMatrix[y][x]->color(ColorMapping->front());
+            else {
+                CellMatrix[y][x]->color(ColorMapping->back());
+            };
             CellMatrix[y][x]->redraw();
         }
-    break;
+        break;
 
     default: break;
-    }// end of switch
+    } // end of switch
 
     return ret;
 }
-
 
 void ViewCells::BindColor(ref_ptr<TwoDMat<uint32_t>> OutMatrix) {
     ColorMatrix = move(OutMatrix);
 }
 
-void ViewCells::BindMapping(ref_ptr<std::vector<Fl_Color>> OutBind) {
-    ColorMapping = move(OutBind);
+void ViewCells::BindColorMapping(ref_ptr<std::vector<Fl_Color>> mapping) {
+    ColorMapping = move(mapping);
 }
-
 
 void ViewCells::UpdateCells() {
     const auto &row_n = ColorMatrix->m_height;
@@ -109,12 +103,8 @@ void ViewCells::UpdateCells() {
 
     for (int i = 0; i < row_n; i++)
         for (int j = 0; j < col_n; j++) {
-            /* if ((*ColorMatrix)[i][j] == true)
-                CellMatrix[i][j]->color(FL_BLACK);
-            else
-                CellMatrix[i][j]->color(FL_WHITE); */
-            CellMatrix[i][j]->color( (*ColorMapping)[ (*ColorMatrix)[i][j] ] );
-            CellMatrix[i][j]->redraw(); 
+            CellMatrix[i][j]->color((*ColorMapping)[(*ColorMatrix)[i][j]]);
+            CellMatrix[i][j]->redraw();
         }
 }
 
@@ -128,6 +118,4 @@ void ViewCells::MyCell_cb(Fl_Widget *ptr, void *ViewCellPtr) {
 void cell_draw(int x, int y, int w, int h, Fl_Color c) {
     fl_color(c);
     fl_rectf(x, y, w, h);
-    fl_color(FL_WHITE);
-    fl_rect(x, y, w, h);
 }
