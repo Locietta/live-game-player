@@ -39,12 +39,14 @@ public:
     ~ViewCells() override = default;
     int handle(int event) override;
 
-    void BindColor(ref_ptr<TwoDMat<bool>> OutMatrix);
+    void BindColor(ref_ptr<TwoDMat<uint32_t>> OutMatrix);
+    void BindMapping(ref_ptr<std::vector<Fl_Color>> OutBind);
     void UpdateCells();
 
 private:
     // data
-    ref_ptr<TwoDMat<bool>> ColorMatrix;
+    ref_ptr<TwoDMat<uint32_t>> ColorMatrix;
+    ref_ptr<std::vector<Fl_Color>> ColorMapping;
     int32_t x, y, edge;
 
     // sub-widgets
