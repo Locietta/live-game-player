@@ -1,6 +1,6 @@
 #include "GameGUI.h"
 
-GameGUI::GameGUI(uint32_t width, uint32_t height, const char *title)
+GameGUI::GameGUI(int32_t width, int32_t height, const char *title)
 : MainWindow(new Fl_Window(width, height, title)) {
     //*step1: change to call back
     //*step2: a new FL_BOX and a new call back

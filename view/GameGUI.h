@@ -13,7 +13,7 @@
 // GUI should include the Field and other buttons
 class GameGUI {
 public:
-    GameGUI(uint32_t width, uint32_t height, const char *title);
+    GameGUI(int32_t width, int32_t height, const char *title);
     ~GameGUI() = default;
     void show() { MainWindow->show(); }
     void BindColor(std::unique_ptr<TwoDMat<bool>> OutMatrix);
