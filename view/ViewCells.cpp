@@ -50,10 +50,10 @@ int ViewCells::handle(int event)
         prev_x = x = (Fl::event_x()-XField)/edge;
         prev_y = y = (Fl::event_y()-YField)/edge;
         CellMatrix[y][x]->do_callback(CellMatrix[y][x], this);
-        if (CellMatrix[y][x]->color() == FL_WHITE)
-            CellMatrix[y][x]->color(FL_BLACK);
+        if (CellMatrix[y][x]->color() != ColorMapping->back() )
+            CellMatrix[y][x]->color( ColorMapping->back() );
         else
-            CellMatrix[y][x]->color(FL_WHITE);
+            CellMatrix[y][x]->color( ColorMapping->front() );
         CellMatrix[y][x]->redraw();
     break; 
 
@@ -67,10 +67,10 @@ int ViewCells::handle(int event)
             prev_x = x;
             prev_y = y;
             CellMatrix[y][x]->do_callback(CellMatrix[y][x], this);
-            if (CellMatrix[y][x]->color() == FL_WHITE)
-                CellMatrix[y][x]->color(FL_BLACK);
+            if (CellMatrix[y][x]->color() != ColorMapping->back() )
+                CellMatrix[y][x]->color( ColorMapping->back() );
             else
-                CellMatrix[y][x]->color(FL_WHITE);
+                CellMatrix[y][x]->color( ColorMapping->front() );
             CellMatrix[y][x]->redraw();
         }
     break;
@@ -82,8 +82,12 @@ int ViewCells::handle(int event)
 }
 
 
-void ViewCells::BindColor(ref_ptr<TwoDMat<bool>> OutMatrix) {
+void ViewCells::BindColor(ref_ptr<TwoDMat<uint32_t>> OutMatrix) {
     ColorMatrix = move(OutMatrix);
+}
+
+void ViewCells::BindMapping(ref_ptr<std::vector<Fl_Color>> OutBind) {
+    ColorMapping = move(OutBind);
 }
 
 
@@ -105,11 +109,12 @@ void ViewCells::UpdateCells() {
 
     for (int i = 0; i < row_n; i++)
         for (int j = 0; j < col_n; j++) {
-            if ((*ColorMatrix)[i][j] == true)
+            /* if ((*ColorMatrix)[i][j] == true)
                 CellMatrix[i][j]->color(FL_BLACK);
             else
-                CellMatrix[i][j]->color(FL_WHITE);
-            CellMatrix[i][j]->redraw();
+                CellMatrix[i][j]->color(FL_WHITE); */
+            CellMatrix[i][j]->color( (*ColorMapping)[ (*ColorMatrix)[i][j] ] );
+            CellMatrix[i][j]->redraw(); 
         }
 }
 
