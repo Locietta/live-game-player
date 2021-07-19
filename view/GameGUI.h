@@ -8,6 +8,7 @@
 #include <FL/fl_draw.H>
 #include <FL/Fl_Button.H>
 #include <cstdlib>
+#include <iostream>
 #include <vector>
 
 //-----------------------------------------------------------------
@@ -25,20 +26,22 @@ public:
     void Set_Random_Cmd(std::function<bool()> &&cmd) noexcept;
     void Set_Clear_Cmd(std::function<bool()> &&cmd) noexcept;
     void Set_SingleStep_Cmd(std::function<bool()> &&cmd) noexcept;
-    void Set_Continue_Cmd(std::function<bool()> &&cmd) noexcept;
-    void Set_Pause_Cmd(std::function<bool()> &&cmd) noexcept;
 
     // get notification
     std::function<void(uint32_t)> Get_Notification() noexcept;
 
 private:
+    // continue state
+    bool isIdle;
+    static void Timer(void*);
+    double period;  // T = 1s by default
+
     // click command
     std::function<bool(uint32_t, uint32_t)> ClickCmd;
     std::function<bool()> RandomCmd;
     std::function<bool()> ClearCmd;
     std::function<bool()> SingleStepCmd;
-    std::function<bool()> ContinueCmd;
-    std::function<bool()> PauseCmd;
+
 
     // sub-widget
     ViewCells *UserArea;
@@ -50,6 +53,8 @@ private:
 
     // call back function
     static void ViewCells_cb(Fl_Widget*, void*);
+    static void StartTimer_cb(Fl_Widget*, void*);
+    static void PauseTimer_cb(Fl_Widget*, void*);
     static void Buttons_cb(Fl_Widget*, void*);
 };
 

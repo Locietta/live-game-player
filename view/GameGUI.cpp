@@ -1,7 +1,10 @@
 #include "GameGUI.h"
 
+
 GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
-    Fl_Window(width, height, title)
+    Fl_Window(width, height, title),
+    isIdle(true),
+    period(1.0)
 {   
     Fl::set_boxtype(FL_FREE_BOXTYPE, cell_draw, 0, 0, 0, 0);
     begin();
@@ -26,37 +29,35 @@ GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     RandomGenerate->callback(Buttons_cb, &RandomCmd);
     Clear->callback(Buttons_cb, &ClearCmd);
     SingleStep->callback(Buttons_cb, &SingleStepCmd);
-    Continue->callback(Buttons_cb, &ContinueCmd);
-    Pause->callback(Buttons_cb, &PauseCmd);
+    Continue->callback(StartTimer_cb, this);
+    Pause->callback(PauseTimer_cb, this);
 }
+
 
 ViewCells *GameGUI::Get_ViewCells(){
     return UserArea;
 }
 
+
 void GameGUI::Set_ClickOnCell_Cmd(std::function<bool(uint32_t, uint32_t)> &&cmd) noexcept {
     ClickCmd = move(cmd);
 }
+
 
 void GameGUI::Set_Random_Cmd(std::function<bool()> &&cmd) noexcept{
     RandomCmd = move(cmd);
 }
 
+
 void GameGUI::Set_Clear_Cmd(std::function<bool()> &&cmd) noexcept{
     ClearCmd = move(cmd);
 }
+
 
 void GameGUI::Set_SingleStep_Cmd(std::function<bool()> &&cmd) noexcept{
     SingleStepCmd = move(cmd);
 }
 
-void GameGUI::Set_Continue_Cmd(std::function<bool()> &&cmd) noexcept{
-    ContinueCmd = move(cmd);
-}
-
-void GameGUI::Set_Pause_Cmd(std::function<bool()> &&cmd) noexcept{
-    PauseCmd = move(cmd);
-}
 
 std::function<void(uint32_t)> GameGUI::Get_Notification() noexcept {
     return [this](uint32_t id) {
@@ -71,8 +72,55 @@ void GameGUI::ViewCells_cb(Fl_Widget* cell, void* window)
     ((GameGUI*)window)->ClickCmd( ((MyCell*)cell)->GetRow(), ((MyCell*)cell)->GetCol() );
 }
 
+
 void GameGUI::Buttons_cb(Fl_Widget* button, void* cmd)
 {
     (*static_cast< std::function<bool()>* >(cmd))();
 }
+
+
+void GameGUI::StartTimer_cb(Fl_Widget* button, void* window)
+{
+    GameGUI* GUIptr = static_cast<GameGUI*>(window);
+    if(GUIptr->isIdle)
+    {
+        GUIptr->isIdle = false;
+        Fl::add_timeout(GUIptr->period, Timer, window);
+    }
+    else
+    {
+        return;
+    }
+}
+
+
+void GameGUI::Timer(void* window)
+{
+    GameGUI* GUIptr = static_cast<GameGUI*>(window);
+    if(GUIptr->isIdle)
+    {
+        return;
+    }
+    else
+    {
+        GUIptr->SingleStepCmd();
+        Fl::repeat_timeout(GUIptr->period, Timer, window);
+    }
+}
+
+
+void GameGUI::PauseTimer_cb(Fl_Widget* button, void* window)
+{
+    GameGUI* GUIptr = static_cast<GameGUI*>(window);
+    if(GUIptr->isIdle)
+    {
+        return;
+    }
+    else
+    {
+        GUIptr->isIdle = true;
+    }
+}
+
+
 
