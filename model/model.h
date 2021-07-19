@@ -26,7 +26,9 @@ public:
     bool init(double Ture_Prob = 0.25); //< random init map
     bool Run(int step);
     bool Randomize(double True_Prob) {
-        return Initalize_Random(m_TwoDMat, True_Prob) && Initalize_Random(m_Color2DMat, True_Prob);
+        bool tmp = Initalize_Random(m_TwoDMat, True_Prob) && Initalize_Random(m_Color2DMat, True_Prob);
+        trigger(PropID_ColorMatrix);
+        return tmp;
     }
     bool SingleStep() { return Run(1); }
     bool Randomize() { return Randomize(True_Prob); }
