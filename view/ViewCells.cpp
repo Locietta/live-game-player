@@ -47,10 +47,10 @@ int ViewCells::handle(int event) {
         prev_y = y = (Fl::event_y() - YField) / edge;
         CellMatrix[y][x]->do_callback(CellMatrix[y][x], this);
 
-        if (CellMatrix[y][x]->color() == (*Mapping).back())
-            CellMatrix[y][x]->color((*Mapping).front());
+        if (CellMatrix[y][x]->color() == (*ColorMapping).back())
+            CellMatrix[y][x]->color((*ColorMapping).front());
         else {
-            CellMatrix[y][x]->color((*Mapping).back());
+            CellMatrix[y][x]->color((*ColorMapping).back());
         }
         CellMatrix[y][x]->redraw();
         break;
@@ -64,10 +64,10 @@ int ViewCells::handle(int event) {
             prev_y = y;
             CellMatrix[y][x]->do_callback(CellMatrix[y][x], this);
             
-            if (CellMatrix[y][x]->color() == (*Mapping).back())
-                CellMatrix[y][x]->color((*Mapping).front());
+            if (CellMatrix[y][x]->color() == ColorMapping->back())
+                CellMatrix[y][x]->color(ColorMapping->front());
             else {
-                CellMatrix[y][x]->color((*Mapping).back());
+                CellMatrix[y][x]->color(ColorMapping->back());
             };
             CellMatrix[y][x]->redraw();
         }
@@ -84,7 +84,7 @@ void ViewCells::BindColor(ref_ptr<TwoDMat<uint32_t>> OutMatrix) {
 }
 
 void ViewCells::BindColorMapping(ref_ptr<std::vector<Fl_Color>> mapping) {
-    Mapping = move(mapping);
+    ColorMapping = move(mapping);
 }
 
 void ViewCells::UpdateCells() {
@@ -105,11 +105,7 @@ void ViewCells::UpdateCells() {
 
     for (int i = 0; i < row_n; i++)
         for (int j = 0; j < col_n; j++) {
-            CellMatrix[i][j]->color((*Mapping)[(*ColorMatrix)[i][j]]);
-            // if ((*ColorMatrix)[i][j] == true)
-            //     CellMatrix[i][j]->color(FL_BLACK);
-            // else
-            //     CellMatrix[i][j]->color(FL_WHITE);
+            CellMatrix[i][j]->color((*ColorMapping)[(*ColorMatrix)[i][j]]);
             CellMatrix[i][j]->redraw();
         }
 }
@@ -124,6 +120,4 @@ void ViewCells::MyCell_cb(Fl_Widget *ptr, void *ViewCellPtr) {
 void cell_draw(int x, int y, int w, int h, Fl_Color c) {
     fl_color(c);
     fl_rectf(x, y, w, h);
-    // fl_color(FL_WHITE);
-    // fl_rect(x, y, w, h);
 }

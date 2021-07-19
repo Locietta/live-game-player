@@ -1,30 +1,40 @@
 #include "model.h"
+#include <cstdint>
 
-// template <typename T>
-Model::Model(size_t height, size_t width, uint32_t stageNum)
-    : m_TwoDMat(height, width), m_Next2DMat(height, width), m_colorStageNum(stageNum) {}
+Model::Model(size_t height, size_t width)
+    : m_TwoDMat(height, width), m_Next2DMat(height, width) {}
 
-// template <typename T>
+constexpr uint32_t rgb_color(uint8_t r, uint8_t g, uint8_t b) { //< ret = (r, g, b, 0x00)
+    if (!r && !g && !b) return 0x000000; // black
+    else return (uint32_t)(((((r << 8) | g) << 8) | b) << 8);
+}
+
 bool Model::init(double True_Prob, uint32_t stageNum) {
-    //     if (typeid(T) == typeid(bool)) {
-    // #ifndef NDEBUG
-    //         std::cerr << "instanciated as bool" << std::endl;
-    // #endif
-    //         stageNum = 2;
-    //     } else {
-    // #ifndef NDEBUG
-    //         std::cerr << "instanciated as uint32_t" << std::endl;
-    // #endif
-    //     }
-
     this->True_Prob = True_Prob;
     m_colorStageNum = stageNum;
+    
+    const uint32_t limit = 0xff, tmp0 = 0x100, tmp1 = 0x200;
+    uint32_t divisor = tmp0 * 15 / 8 / (stageNum - 1);
+
+    m_colorList.clear();
+    uint32_t partialSum = 0;
+    for (uint32_t i = 0; i < stageNum - 1; i++) {
+        if (partialSum >= tmp1) {
+            m_colorList.push_back(rgb_color(partialSum % tmp1, limit, limit));
+        } else if (partialSum >= tmp0) {
+            m_colorList.push_back(rgb_color(0x00, partialSum % tmp0, limit));
+        } else {
+            m_colorList.push_back(rgb_color(0x00, 0x00, partialSum % tmp0));
+        }
+        partialSum += divisor;
+    }
+    m_colorList.push_back(rgb_color(0xcc, 0xcc, 0xcc)); // white
+
     Randomize(True_Prob);
     trigger(PropID_ColorMatrix);
     return true;
 }
 
-// template <typename T>
 size_t countBeside(size_t i, size_t j, TwoDMat<uint32_t> &Mat, size_t height, size_t width, uint32_t stageNum) {
     // size_t sizeTmax = std::numeric_limits<size_t>::max();
 #define active(i, j) (Mat[i][j] == (stageNum - 1))
@@ -46,18 +56,16 @@ size_t countBeside(size_t i, size_t j, TwoDMat<uint32_t> &Mat, size_t height, si
     return cnt;
 };
 
-// template <typename T>
 bool Model::Run(int step) {
     assert(step >= 0);
     auto temp = m_TwoDMat.buf;
 
-    int cnt;
     size_t height = m_Next2DMat.m_height;
     size_t width = m_Next2DMat.m_width;
     for (int i = 0; i < step; i++) {
         for (size_t j = 0; j < height; j++) {
             for (size_t k = 0; k < width; k++) {
-                cnt = countBeside(j, k, m_TwoDMat, height, width, m_colorStageNum);
+                auto cnt = countBeside(j, k, m_TwoDMat, height, width, m_colorStageNum);
                 if (cnt < 2 || cnt > 3) m_Next2DMat[j][k] = (m_TwoDMat[j][k]) ? m_TwoDMat[j][k] - 1 : 0;
                 if (cnt == 2) {
                     if (m_TwoDMat[j][k] == m_colorStageNum - 1)
@@ -80,14 +88,12 @@ bool Model::Run(int step) {
     return true;
 }
 
-// template <typename T>
 bool Model::Randomize(double True_Prob) {
     bool tmp = Initalize_Random(m_TwoDMat, True_Prob, m_colorStageNum);
     trigger(PropID_ColorMatrix);
     return tmp;
 }
 
-// template <typename T>
 bool Model::changeState(size_t row_idx, size_t col_idx) {
     assert(row_idx < MAXSIZE && col_idx < MAXSIZE);
     m_TwoDMat[row_idx][col_idx] = (m_TwoDMat[row_idx][col_idx]) ? 0 : m_colorStageNum - 1;
@@ -106,7 +112,7 @@ bool Model::Clear() {
 }
 
 /* Private Function Implementations */
-// template <typename T>
+
 bool Initalize_Random(TwoDMat<uint32_t> &m_TwoDMat, double True_Probility, uint32_t stageNum) {
     std::random_device rd;  // Will be used to obtain a seed for the random number engine
     std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
@@ -121,7 +127,6 @@ bool Initalize_Random(TwoDMat<uint32_t> &m_TwoDMat, double True_Probility, uint3
     return true;
 }
 
-// template <typename T>
 bool Model::Adjust_Random(size_t height, size_t width, double TrueProb) {
     m_TwoDMat.ReInit(height, width);
     m_Next2DMat.ReInit(height, width);
@@ -130,7 +135,6 @@ bool Model::Adjust_Random(size_t height, size_t width, double TrueProb) {
     return true;
 }
 
-// template <typename T>
 bool Model::Load(const std::string &file_Name) {
     std::ifstream ifs(file_Name);
     assert(ifs.is_open());
@@ -144,7 +148,6 @@ bool Model::Load(const std::string &file_Name) {
     return true;
 }
 
-// template <typename T>
 bool Model::Save(const std::string &file_Name) {
     std::ofstream ofs(file_Name);
     assert(ofs.is_open());

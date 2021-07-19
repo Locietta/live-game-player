@@ -14,7 +14,7 @@
 //--------------------location and size of field----------------
 inline const int32_t XField = 200;
 inline const int32_t YField = 0;
-inline const int32_t CellSize = 10;
+inline const int32_t CellSize = 5;
 
 //-------------------------------------------------
 // MyCell means a little square (white or black)
@@ -38,7 +38,7 @@ public:
     ViewCells(int32_t x, int32_t y, int32_t edge, Fl_Callback *ViewCell_cb);
     ~ViewCells() override = default;
     int handle(int event) override;
-    
+
     void BindColor(ref_ptr<TwoDMat<uint32_t>> OutMatrix);
     void BindColorMapping(ref_ptr<std::vector<Fl_Color>> mapping);
     void UpdateCells();
@@ -46,7 +46,7 @@ public:
 private:
     // data
     ref_ptr<TwoDMat<uint32_t>> ColorMatrix;
-    ref_ptr<std::vector<Fl_Color>> Mapping;
+    ref_ptr<std::vector<Fl_Color>> ColorMapping;
     int32_t x, y, edge;
 
     // sub-widgets

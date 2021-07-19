@@ -20,7 +20,7 @@ bool Initalize_Random(TwoDMat<uint32_t> &m_TwoDMat, double True_Probility, uint3
 // template <typename T>
 class Model : public Notification {
 public:
-    Model(size_t heigth = defaultRowNum, size_t width = defaultColNum, uint32_t stageNum = 8);
+    Model(size_t heigth = defaultRowNum, size_t width = defaultColNum);
     ~Model() = default;
 
     // std::function<void(uint32_t)> get_model_modification() noexcept;
@@ -38,17 +38,16 @@ public:
     bool Save(const std::string &file_Name);
 
     ref_ptr<TwoDMat<uint32_t>> Get_2DMat() { return ref_ptr(m_TwoDMat); }
-    uint32_t Get_StageNum() { return m_colorStageNum; }
+    auto Get_ColorMapping() { return ref_ptr(m_colorList); }
 
 private:
     double True_Prob;
     uint32_t m_colorStageNum;
+    std::vector<uint32_t> m_colorList;
     TwoDMat<uint32_t> m_TwoDMat;
     TwoDMat<uint32_t> m_Next2DMat;
 
     std::function<void(uint32_t, uint32_t, bool)> changecolor;
 };
-
-
 
 #endif // _MODEL_H_
