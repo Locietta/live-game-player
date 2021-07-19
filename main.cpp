@@ -5,7 +5,10 @@ using namespace std;
 #include <windows.h>
 
 int main(int argc, char* argv[]) {
+    #ifdef NDEBUG
     FreeConsole();
+    #endif
+
     App a;
     bool t = a.init();
     return a.run();
