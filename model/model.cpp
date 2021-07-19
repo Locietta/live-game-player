@@ -81,13 +81,12 @@ bool Model::Run(int step) {
     assert(step >= 0);
     auto temp = m_TwoDMat.buf;
 
-    int cnt;
     size_t height = m_Next2DMat.m_height;
     size_t width = m_Next2DMat.m_width;
     for (int i = 0; i < step; i++) {
         for (size_t j = 0; j < height; j++) {
             for (size_t k = 0; k < width; k++) {
-                cnt = countBeside(j, k, m_TwoDMat, height, width);
+                auto cnt = countBeside(j, k, m_TwoDMat, height, width);
                 if (cnt < 2 || cnt > 3) m_Next2DMat[j][k] = false;
                 if (cnt == 2) m_Next2DMat[j][k] = m_TwoDMat[j][k];
                 if (cnt == 3) m_Next2DMat[j][k] = true;
