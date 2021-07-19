@@ -3,7 +3,7 @@
 
 #include <cstdint>
 #include <functional>
-
+#include <FL/Enumerations.H>
 #include "../common/ref_ptr.h"
 #include "./../model/model.h"
 // VM must know the model's definition, and teacher does so
