@@ -39,7 +39,7 @@ bool Model::Adjust_Random(size_t height, size_t width, double TrueProb) {
     return true;
 }
 
-bool Model::Load(std::string &file_Name) {
+bool Model::Load(const std::string &file_Name) {
     std::ifstream ifs(file_Name);
     assert(ifs.is_open());
     size_t height, width;
@@ -52,7 +52,7 @@ bool Model::Load(std::string &file_Name) {
     return true;
 }
 
-bool Model::Save(std::string &file_Name) {
+bool Model::Save(const std::string &file_Name) {
     std::ofstream ofs(file_Name);
     assert(ofs.is_open());
     size_t height, width;

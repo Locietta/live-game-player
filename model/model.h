@@ -49,8 +49,8 @@ public:
     bool Clear_Color();
 
     bool Adjust_Random(size_t height, size_t width, double TrueProb);
-    bool Load(std::string &file_Name);
-    bool Save(std::string &file_Name);
+    bool Load(const std::string &file_Name);
+    bool Save(const std::string &file_Name);
 
     ref_ptr<TwoDMat<bool>> Get_Bool2DMat();
 

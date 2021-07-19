@@ -2,9 +2,9 @@
 
 
 GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
-    Fl_Window(width, height, title),
+    Fl_Double_Window(width, height, title),
     isIdle(true),
-    period(1.0)
+    period(0.3)
 {   
     Fl::set_boxtype(FL_FREE_BOXTYPE, cell_draw, 0, 0, 0, 0);
     begin();
@@ -62,7 +62,10 @@ void GameGUI::Set_SingleStep_Cmd(std::function<bool()> &&cmd) noexcept{
 std::function<void(uint32_t)> GameGUI::Get_Notification() noexcept {
     return [this](uint32_t id) {
         if(id == PropID_ColorMatrix)
+        {
             UserArea->UpdateCells();
+        }
+            
     };
 }
 
@@ -81,7 +84,7 @@ void GameGUI::Buttons_cb(Fl_Widget* button, void* cmd)
 
 void GameGUI::StartTimer_cb(Fl_Widget* button, void* window)
 {
-    GameGUI* GUIptr = static_cast<GameGUI*>(window);
+    auto* GUIptr = static_cast<GameGUI*>(window);
     if(GUIptr->isIdle)
     {
         GUIptr->isIdle = false;
@@ -96,7 +99,7 @@ void GameGUI::StartTimer_cb(Fl_Widget* button, void* window)
 
 void GameGUI::Timer(void* window)
 {
-    GameGUI* GUIptr = static_cast<GameGUI*>(window);
+    auto* GUIptr = static_cast<GameGUI*>(window);
     if(GUIptr->isIdle)
     {
         return;
@@ -111,7 +114,7 @@ void GameGUI::Timer(void* window)
 
 void GameGUI::PauseTimer_cb(Fl_Widget* button, void* window)
 {
-    GameGUI* GUIptr = static_cast<GameGUI*>(window);
+    auto* GUIptr = static_cast<GameGUI*>(window);
     if(GUIptr->isIdle)
     {
         return;
