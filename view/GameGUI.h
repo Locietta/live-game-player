@@ -5,6 +5,7 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Window.H>
+#include <FL/Fl_Double_Window.H>
 #include <FL/fl_draw.H>
 #include <FL/Fl_Button.H>
 #include <cstdlib>
@@ -13,7 +14,7 @@
 
 //-----------------------------------------------------------------
 // GUI should include the Field and other buttons
-class GameGUI : public Fl_Window{
+class GameGUI : public Fl_Double_Window{
 public:
     GameGUI(int32_t width, int32_t height, const char *title);
     ~GameGUI() override = default;

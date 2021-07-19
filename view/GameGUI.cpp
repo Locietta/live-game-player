@@ -2,7 +2,7 @@
 
 
 GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
-    Fl_Window(width, height, title),
+    Fl_Double_Window(width, height, title),
     isIdle(true),
     period(1.0)
 {   
@@ -62,7 +62,10 @@ void GameGUI::Set_SingleStep_Cmd(std::function<bool()> &&cmd) noexcept{
 std::function<void(uint32_t)> GameGUI::Get_Notification() noexcept {
     return [this](uint32_t id) {
         if(id == PropID_ColorMatrix)
+        {
             UserArea->UpdateCells();
+        }
+            
     };
 }
 
