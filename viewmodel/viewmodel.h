@@ -24,8 +24,6 @@ public:
     std::function<bool()>get_RandomizeCmd();
     std::function<bool()>get_SingleStepCmd();
     std::function<bool()>get_ClearCmd();
-    // std::function<bool(uint32_t, uint32_t)> get_InitRdmCmd();
-    // std::function<bool(int)> get_Run_N_Time_Cmd();
 
 private:
     std::shared_ptr<Model> m_spModel;
