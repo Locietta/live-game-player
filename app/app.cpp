@@ -7,13 +7,13 @@ App::App() = default;
 App::~App() = default;
 
 //-------------------- main window info -----------------------
-static const uint32_t WindowWidth = 500;
-static const uint32_t WindowHeight = 500;
+static const uint32_t WindowWidth = 1000;
+static const uint32_t WindowHeight = 800;
 static const char *WindowTitle = "Conway Life Game";
 
 bool App::init() {
     m_GUI = make_shared<GameGUI>(WindowWidth, WindowHeight, WindowTitle);
-    
+
     m_ViewModel = make_shared<ViewModel>();
     m_Model = make_shared<Model>();
     m_ViewModel->LinkToModel(m_Model);
@@ -27,6 +27,9 @@ bool App::init() {
     
     // commands
     m_GUI->Set_ClickOnCell_Cmd(m_ViewModel->get_DrawCmd());
+    m_GUI->Set_Clear_Cmd(m_ViewModel->get_ClearCmd());
+    m_GUI->Set_Random_Cmd(m_ViewModel->get_RandomizeCmd());
+    m_GUI->Set_SingleStep_Cmd(m_ViewModel->get_SingleStepCmd());
     return true;
 
 }

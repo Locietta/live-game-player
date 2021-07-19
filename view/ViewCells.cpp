@@ -1,28 +1,8 @@
 #include "ViewCells.h"
 #include <cassert>
+#include <iostream>
 
 using namespace std;
-
-int MyCell::handle(int event) {
-    int ret = 1; // this return value may be modified to suit the function "DRAG"
-
-    switch (event) {
-    case FL_PUSH:
-        // update matrix in model
-        do_callback(this, this->parent());
-        // update view
-        if (color() == FL_BLACK)
-            color(FL_WHITE);
-        else
-            color(FL_BLACK);
-        redraw();
-        break;
-
-    default: break;
-    }
-
-    return ret;
-}
 
 //----------------------------------class MyCell-------------------------------
 MyCell::MyCell(int32_t x, int32_t y, int32_t edge, uint32_t row, uint32_t col, Fl_Callback *MyCell_cb)
@@ -40,6 +20,7 @@ MyCell::MyCell(MyCell &&rhs) noexcept
 }
 //-----------------------------------------------------------------------------
 
+
 //----------------------------------class ViewCells-------------------------------
 ViewCells::ViewCells(int32_t x, int32_t y, int32_t edge, Fl_Callback *ViewCell_cb)
     : Fl_Group(x, y, edge * defaultColNum, edge * defaultRowNum), x{x}, y{y}, edge{edge} {
@@ -56,9 +37,55 @@ ViewCells::ViewCells(int32_t x, int32_t y, int32_t edge, Fl_Callback *ViewCell_c
     end();
 }
 
+
+int ViewCells::handle(int event)
+{
+    int ret = 1;
+    int x = 0, y = 0;
+    static int prev_x = -1, prev_y = -1;
+
+    switch(event)
+    {
+    case FL_PUSH:
+        prev_x = x = (Fl::event_x()-XField)/edge;
+        prev_y = y = (Fl::event_y()-YField)/edge;
+        CellMatrix[y][x]->do_callback(CellMatrix[y][x], this);
+        if (CellMatrix[y][x]->color() == FL_WHITE)
+            CellMatrix[y][x]->color(FL_BLACK);
+        else
+            CellMatrix[y][x]->color(FL_WHITE);
+        CellMatrix[y][x]->redraw();
+    break; 
+
+    case FL_DRAG:
+        x = (Fl::event_x()-XField)/edge;
+        y = (Fl::event_y()-YField)/edge;
+        if(x<0 || x>=CellMatrix[0].size() || y<0 || y>=CellMatrix.size())
+            break;  // offset check
+        if( x != prev_x || y != prev_y )
+        {
+            prev_x = x;
+            prev_y = y;
+            CellMatrix[y][x]->do_callback(CellMatrix[y][x], this);
+            if (CellMatrix[y][x]->color() == FL_WHITE)
+                CellMatrix[y][x]->color(FL_BLACK);
+            else
+                CellMatrix[y][x]->color(FL_WHITE);
+            CellMatrix[y][x]->redraw();
+        }
+    break;
+
+    default: break;
+    }// end of switch
+
+    return ret;
+}
+
+
 void ViewCells::BindColor(ref_ptr<TwoDMat<bool>> OutMatrix) {
     ColorMatrix = move(OutMatrix);
 }
+
 
 void ViewCells::UpdateCells() {
     const auto &row_n = ColorMatrix->m_height;

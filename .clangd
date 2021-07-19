@@ -1,0 +1,17 @@
+Diagnostics:
+  ClangTidy:
+    Add:
+      [
+        performance-*,
+        bugprone-*,
+        portability-*,
+        modernize-*,
+      ]
+    Remove: 
+      [
+        modernize-use-trailing-return-type,
+        modernize-avoid-c-arrays,
+        modernize-redundant-void-arg
+      ]
+    CheckOptions:
+      WarnOnFloatingPointNarrowingConversion: false

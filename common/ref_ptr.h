@@ -1,6 +1,8 @@
 #ifndef _REF_PTR_H_
 #define _REF_PTR_H_
 
+#include <cassert>
+
 template <typename T>
 class ref_ptr {
 public:

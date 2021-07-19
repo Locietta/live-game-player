@@ -1,21 +1,15 @@
 #include "model.h"
-#include "Defs.h"
 
-#include <cassert>
-
-#include <iostream>
-#include <random>
-
-using namespace std;
-
-static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat,double True_Probility);
-
-Model::Model() : m_TwoDMat(defaultRowNum, defaultColNum) {}
+Model::Model(size_t height, size_t width)
+    : m_TwoDMat(height, width), m_Next2DMat(height, width), m_Color2DMat(height, width),
+      m_NextColor2DMat(height, width) {}
 
 bool Model::init(double True_Prob) {
-    Initalize_Random(m_TwoDMat,True_Prob);
+    this->True_Prob = True_Prob;
+    Randomize(True_Prob);
+    //Initalize_Random(m_TwoDMat, True_Prob);
     trigger(PropID_ColorMatrix);
-	return true;
+    return true;
 }
 
 auto countBeside = [](size_t i, size_t j, TwoDMat<bool> &Mat) {
@@ -38,11 +32,50 @@ auto countBeside = [](size_t i, size_t j, TwoDMat<bool> &Mat) {
     return cnt;
 };
 
-function<void(uint32_t)> Model::get_model_modification() noexcept {
-    return [this](uint32_t id) {
-        std::cout << "model update" << std::endl;
-        trigger(id);
-    };
+bool Model::Adjust_Random(size_t height, size_t width, double TrueProb) {
+    m_TwoDMat.ReInit(height, width);
+    m_Next2DMat.ReInit(height, width);
+    Initalize_Random(m_TwoDMat, TrueProb);
+    trigger(PropID_ColorMatrix);
+    return true;
+}
+
+bool Model::Load(std::string file_Name) {
+    std::ifstream ifs(file_Name);
+    assert(ifs.is_open());
+    size_t height, width;
+    ifs >> height >> width;
+    m_TwoDMat.ReInit(height, width);
+    m_Next2DMat.ReInit(height, width);
+    for (size_t i = 0; i < height; i++)
+        for (size_t j = 0; j < width; j++) ifs >> m_TwoDMat[i][j];
+    trigger(PropID_ColorMatrix);
+    return true;
+}
+
+bool Model::Save(std::string file_Name) {
+    std::ofstream ofs(file_Name);
+    assert(ofs.is_open());
+    size_t height, width;
+    height = m_TwoDMat.m_height;
+    width = m_TwoDMat.m_width;
+    ofs << height << width << "\n";
+    for (size_t i = 0; i < height; i++) {
+        for (size_t j = 0; j < width; j++) ofs << static_cast<int>(m_TwoDMat[i][j]);
+        ofs << "\n";
+    }
+    //No change no trigger
+    return true;
+}
+
+bool Model::Clear() {
+    for (int i = 0; i < m_TwoDMat.m_height; i++) {
+        for (int j = 0; j < m_TwoDMat.m_width; j++) {
+            m_TwoDMat[i][j] = false;
+        }
+    }
+    trigger(PropID_ColorMatrix);
+    return true;
 }
 
 bool Model::Run(int step) {
@@ -64,16 +97,15 @@ bool Model::Run(int step) {
         m_TwoDMat.buf = m_Next2DMat.buf;
         m_Next2DMat.buf = temp;
     }
+    trigger(PropID_ColorMatrix);
 
     return true;
 }
 
 bool Model::changeState(size_t row_idx, size_t col_idx) {
     assert(row_idx < MAXSIZE && col_idx < MAXSIZE);
-#ifndef NDEBUG
-    cerr << m_TwoDMat[row_idx][col_idx] << " turn to " << !m_TwoDMat[row_idx][col_idx] << endl;
-#endif
     m_TwoDMat[row_idx][col_idx] = !m_TwoDMat[row_idx][col_idx];
+    //no trigger
     return true;
 }
 
@@ -83,7 +115,7 @@ ref_ptr<TwoDMat<bool>> Model::Get_Bool2DMat() {
 
 /* Private Function Implementations */
 
-static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat,double True_Probility) {
+bool Initalize_Random(TwoDMat<bool> &m_TwoDMat, double True_Probility) {
     std::random_device rd;  // Will be used to obtain a seed for the random number engine
     std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
     std::bernoulli_distribution dis(True_Probility);
@@ -92,6 +124,21 @@ static bool Initalize_Random(TwoDMat<bool> &m_TwoDMat,double True_Probility) {
         for (int j = 0; j < m_TwoDMat.m_width; j++) {
             m_TwoDMat[i][j] = dis(gen);
         }
+    } 
+    //Not member method no trigger
+    return true;
+}
+
+bool Initalize_Random(TwoDMat<unsigned char> &m_TwoDMat, double True_Probility) {
+    std::random_device rd;  // Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
+    std::bernoulli_distribution dis(True_Probility);
+
+    for (int i = 0; i < m_TwoDMat.m_height; i++) {
+        for (int j = 0; j < m_TwoDMat.m_width; j++) {
+            m_TwoDMat[i][j] = std::numeric_limits<unsigned char>::max() * dis(gen);
+        }
     }
+    //Not member method no trigger
     return true;
 }
