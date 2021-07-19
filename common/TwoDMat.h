@@ -23,14 +23,15 @@ struct TwoDMat {
         m_height = height;
         delete[] buf;
         buf = new T[m_width * m_height];
+        return true;
     }
     std::tuple<size_t, size_t> Resize(size_t height, size_t width) { // todo Untested
         assert(height <= MAXSIZE && width <= MAXSIZE);
-        std::tuple<size_t, size_t> ret = {m_height, m_width};
+        auto ret = std::make_tuple(m_height, m_width);
 
         T *tmp = new T[height * width];
         size_t minHeight = (m_height < height) ? m_height : height;
-        size_t minWidth = (m_width < width) ? m_width : m_width;
+        size_t minWidth = (m_width < width) ? m_width : width;
         for (size_t i = 0; i < minHeight; i++) memcpy(tmp + i * width, buf + i * m_width, minWidth);
 
         m_width = width;
