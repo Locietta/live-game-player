@@ -9,9 +9,6 @@ function<void(unsigned int)> ViewModel::get_Notification() noexcept {
     return [this](unsigned int id) {
         switch (id) {
         case PropID_ColorMatrix: {
-#ifndef NDEBUG
-            cerr << "view model receive notification" << endl;
-#endif
             trigger(PropID_ColorMatrix);
         } break;
         default: {
