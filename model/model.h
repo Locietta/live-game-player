@@ -4,7 +4,7 @@
 #include "../common/Defs.h"
 #include "../common/TwoDMat.h"
 #include "../common/notification/Notification.h"
-#include "ref_ptr.h"
+#include "../common/ref_ptr.h"
 #include <cassert>
 #include <cstdint>
 #include <fstream>

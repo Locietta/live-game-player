@@ -36,6 +36,7 @@ bool Model::Adjust_Random(size_t height, size_t width, double TrueProb) {
     m_TwoDMat.ReInit(height, width);
     m_Next2DMat.ReInit(height, width);
     Initalize_Random(m_TwoDMat, TrueProb);
+    trigger(PropID_ColorMatrix);
     return true;
 }
 
@@ -48,6 +49,7 @@ bool Model::Load(std::string file_Name) {
     m_Next2DMat.ReInit(height, width);
     for (size_t i = 0; i < height; i++)
         for (size_t j = 0; j < width; j++) ifs >> m_TwoDMat[i][j];
+    trigger(PropID_ColorMatrix);
     return true;
 }
 
@@ -62,6 +64,7 @@ bool Model::Save(std::string file_Name) {
         for (size_t j = 0; j < width; j++) ofs << static_cast<int>(m_TwoDMat[i][j]);
         ofs << "\n";
     }
+    //No change no trigger
     return true;
 }
 
@@ -71,6 +74,7 @@ bool Model::Clear() {
             m_TwoDMat[i][j] = false;
         }
     }
+    trigger(PropID_ColorMatrix);
     return true;
 }
 
@@ -93,6 +97,7 @@ bool Model::Run(int step) {
         m_TwoDMat.buf = m_Next2DMat.buf;
         m_Next2DMat.buf = temp;
     }
+    trigger(PropID_ColorMatrix);
 
     return true;
 }
@@ -100,6 +105,7 @@ bool Model::Run(int step) {
 bool Model::changeState(size_t row_idx, size_t col_idx) {
     assert(row_idx < MAXSIZE && col_idx < MAXSIZE);
     m_TwoDMat[row_idx][col_idx] = !m_TwoDMat[row_idx][col_idx];
+    //no trigger
     return true;
 }
 
@@ -118,7 +124,8 @@ bool Initalize_Random(TwoDMat<bool> &m_TwoDMat, double True_Probility) {
         for (int j = 0; j < m_TwoDMat.m_width; j++) {
             m_TwoDMat[i][j] = dis(gen);
         }
-    }
+    } 
+    //Not member method no trigger
     return true;
 }
 
@@ -132,5 +139,6 @@ bool Initalize_Random(TwoDMat<unsigned char> &m_TwoDMat, double True_Probility) 
             m_TwoDMat[i][j] = std::numeric_limits<unsigned char>::max() * dis(gen);
         }
     }
+    //Not member method no trigger
     return true;
 }
