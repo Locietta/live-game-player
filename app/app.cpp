@@ -24,6 +24,7 @@ bool App::init() {
     
     // binding
     m_GUI->Get_ViewCells()->BindColor(m_ViewModel->Get2DBoolMat());
+    m_GUI->Get_ViewCells()->BindColorMapping(m_ViewModel->GetCollerMapping());
     
     // commands
     m_GUI->Set_ClickOnCell_Cmd(m_ViewModel->get_DrawCmd());
