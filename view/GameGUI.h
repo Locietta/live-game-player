@@ -14,7 +14,7 @@
 // GUI should include the Field and other buttons
 class GameGUI : public Fl_Window{
 public:
-    GameGUI(uint32_t width, uint32_t height, const char *title);
+    GameGUI(int32_t width, int32_t height, const char *title);
     ~GameGUI() override = default;
 
     // bind widget attribute

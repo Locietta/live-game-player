@@ -1,6 +1,6 @@
 #include "GameGUI.h"
 
-GameGUI::GameGUI(uint32_t width, uint32_t height, const char *title):
+GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     Fl_Window(width, height, title)
 {   
     Fl::set_boxtype(FL_FREE_BOXTYPE, cell_draw, 0, 0, 0, 0);
