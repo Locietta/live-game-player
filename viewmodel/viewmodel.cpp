@@ -1,5 +1,5 @@
 #include "viewmodel.h"
-#include "Defs.h"
+#include "../common/Defs.h"
 
 #include <iostream>
 
