@@ -58,6 +58,6 @@ cmake --build build -j8  # 编译可执行文件到build文件下
 
 王灵鑫：项目Manager，管理持续集成、构建脚本和代码规范
 
-陈德翰：view模块，FLTK界面编写
+陈德瀚：view模块，FLTK界面编写
 
 杨林涛：view model, model模块编写
