@@ -39,3 +39,6 @@ TestBuild/
 # un-ignore pre-built fltk
 !fltk/lib/**/*.a
 !fltk/lib/**/*.lib
+
+# ignore release packages
+pack/
