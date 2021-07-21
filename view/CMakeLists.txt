@@ -6,13 +6,16 @@ add_library(view GameGUI.cpp ViewCells.cpp)
 find_package(FLTK REQUIRED)
 if (MSVC)
     target_link_libraries(view common FLTK_LIBS)
+    target_include_directories(view
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} 
+    )
 else()
     target_link_libraries(view common ${FLTK_LIBRARIES})
+    target_include_directories(view
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} 
+    PRIVATE ${FLTK_INCLUDE_DIR}
+    )
 endif()
-target_include_directories(view
-INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} 
-PRIVATE ${FLTK_INCLUDE_DIR}
-)
 
 target_precompile_headers(view
     PRIVATE
