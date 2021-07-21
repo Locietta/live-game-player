@@ -1,3 +1,4 @@
+/* FL/abi-version.h.  Generated from abi-version.in by configure.  */
 /*
   ABI Configuration file for the Fast Light Tool Kit (FLTK).
 
@@ -8,4 +9,4 @@
   define FL_ABI_VERSION: 1xxyy for 1.x.y (xx,yy with leading zero)
 */
 
-#undef FL_ABI_VERSION
+/* #undef FL_ABI_VERSION */

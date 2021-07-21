@@ -1,10 +1,14 @@
-cmake_minimum_required(VERSION 3.16.0)
+cmake_minimum_required(VERSION 3.18.0)
 project(live-game VERSION 0.1.0)
 
 SET(CMAKE_CXX_STANDARD 17)
 
 include(CTest)
 enable_testing()
+
+if (MSVC)
+add_subdirectory(fltk)
+endif()
 
 add_subdirectory(common)
 add_subdirectory(model)
