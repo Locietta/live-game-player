@@ -16,7 +16,7 @@ set(FLTK_MSVC_NAMES "fltk" "fltk_z" "fltk_jpeg" "fltk_images" "fltk_gl" "fltk_pn
 set(FLTK_MSVC_DEBUG_NAMES "fltkd" "fltk_zd" "fltk_jpegd" "fltk_imagesd" "fltk_gld" "fltk_pngd" "fltk_formsd")
 
 if (MSVC)
-    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         set(FLTK_NAMES ${FLTK_MSVC_DEBUG_NAMES})
     else()
         set(FLTK_NAMES ${FLTK_MSVC_NAMES})

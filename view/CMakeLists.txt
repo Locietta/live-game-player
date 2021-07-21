@@ -3,13 +3,13 @@
 
 add_library(view GameGUI.cpp ViewCells.cpp)
 
-find_package(FLTK REQUIRED)
 if (MSVC)
     target_link_libraries(view common FLTK_LIBS)
     target_include_directories(view
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} 
     )
 else()
+    find_package(FLTK REQUIRED)
     target_link_libraries(view common ${FLTK_LIBRARIES})
     target_include_directories(view
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} 
