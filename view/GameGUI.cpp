@@ -4,6 +4,8 @@
 GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     Fl_Double_Window(width, height, title)
 {   
+    Picture = new Fl_PNG_Image("life_game.png");
+    color(0xFFFFFF00);
     Fl::set_boxtype(FL_FREE_BOXTYPE, cell_draw, 0, 0, 0, 0);
     begin();
     RandomGenerate = new Fl_Button(xButton, yButtonRG, wButton, hButton, "Randomize");
@@ -11,24 +13,52 @@ GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     SingleStep = new Fl_Button(xButton, yButtonSS, wButton, hButton, "Single Step");
     Continue = new Fl_Button(xButton, yButtonConti, wButton, hButton, "Continue");
     Pause = new Fl_Button(xButton, yButtonPa, wButton, hButton, "Pause");
+    Periodinput = new Fl_Float_Input(xButton+35, yPeriodInput, wButton-35, hButton, "Period(s)");
+    Confirm = new Fl_Button(xButton, yConfirm, wButton, hButton, "Confirm");
     UserArea = new ViewCells(XField, YField, CellSize, ViewCells_cb);
+    Picbox = new Fl_Box(0, height-200, 200, 200);
+    Picbox->image(Picture);
     end();
 
+    // label size
     RandomGenerate->labelsize(20);
     Clear->labelsize(20);
     SingleStep->labelsize(20);
     Continue->labelsize(20);
     Pause->labelsize(20);
+    Confirm->labelsize(20);
+
+    // label font
     RandomGenerate->labelfont(FL_BOLD);
     Clear->labelfont(FL_BOLD);
     SingleStep->labelfont(FL_BOLD);
     Continue->labelfont(FL_BOLD);
     Pause->labelfont(FL_BOLD);
+    Confirm->labelfont(FL_BOLD);
+    Periodinput->labelfont(FL_BOLD);
+
+    // label color
+    RandomGenerate->color(0xAFEEEE00);
+    RandomGenerate->color2(0xB0E0E600);
+    Clear->color(0xAFEEEE00);
+    Clear->color2(0xB0E0E600);
+    SingleStep->color(0xAFEEEE00);
+    SingleStep->color2(0xB0E0E600);
+    Continue->color(0xAFEEEE00);
+    Continue->color2(0xB0E0E600);
+    Pause->color(0xAFEEEE00);
+    Pause->color2(0xB0E0E600);
+    Confirm->color(0xAFEEEE00);
+    Confirm->color2(0xB0E0E600);
+
+    // label callback
     RandomGenerate->callback(Buttons_cb, &RandomCmd);
     Clear->callback(Buttons_cb, &ClearCmd);
     SingleStep->callback(Buttons_cb, &SingleStepCmd);
     Continue->callback(StartTimer_cb, this);
     Pause->callback(PauseTimer_cb, this);
+    Confirm->callback(Confirm_cb, this);
+
 }
 
 
@@ -123,5 +153,9 @@ void GameGUI::PauseTimer_cb(Fl_Widget* button, void* window)
     }
 }
 
-
+void GameGUI::Confirm_cb(Fl_Widget* button, void* window)
+{
+    auto GUIptr = static_cast<GameGUI*>(window);
+    GUIptr->period = strtod(GUIptr->Periodinput->value(), nullptr);
+}
 
