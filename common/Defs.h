@@ -2,7 +2,6 @@
 #define _DEFS_H_
 
 #include <cstdint>
-
 extern const int32_t defaultRowNum;
 extern const int32_t defaultColNum;
 

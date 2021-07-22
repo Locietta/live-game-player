@@ -8,6 +8,8 @@
 #include <FL/Fl_Double_Window.H>
 #include <FL/fl_draw.H>
 #include <FL/Fl_Button.H>
+#include <FL/Fl_PNG_Image.H>
+#include <FL/Fl_Float_Input.H>
 #include <cstdlib>
 #include <iostream>
 #include <vector>
@@ -35,7 +37,7 @@ private:
     // continue state
     bool isIdle = true;
     static void Timer(void*);
-    double period = 0.2;  // seconds
+    double period = 0.5;  // seconds
 
     // click command
     std::function<bool(uint32_t, uint32_t)> ClickCmd;
@@ -49,14 +51,19 @@ private:
     Fl_Button *RandomGenerate;
     Fl_Button *Clear;
     Fl_Button *SingleStep;
-    Fl_Button *Continue;
+    Fl_Button *Evolve;
     Fl_Button *Pause;
+    Fl_PNG_Image *Picture;
+    Fl_Box *Picbox;
+    Fl_Float_Input *Periodinput;
+    Fl_Button *Confirm;
 
     // call back function
     static void ViewCells_cb(Fl_Widget*, void*);
     static void StartTimer_cb(Fl_Widget*, void*);
     static void PauseTimer_cb(Fl_Widget*, void*);
     static void Buttons_cb(Fl_Widget*, void*);
+    static void Confirm_cb(Fl_Widget*, void*);
 };
 
 
@@ -69,6 +76,8 @@ static const int32_t yButtonClear = 90;
 static const int32_t yButtonSS = 160;
 static const int32_t yButtonConti = 230;
 static const int32_t yButtonPa = 300;
+static const int32_t yPeriodInput = 370;
+static const int32_t yConfirm = 440;
 
 
 #endif // _GAMEGUI_H_
