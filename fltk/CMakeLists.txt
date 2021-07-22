@@ -1,6 +1,10 @@
 set(FLTK_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/include)
 
-set(FLTK_LIB_PREFIX ${CMAKE_CURRENT_LIST_DIR}/lib/windows/x64)
+if (MSVC)
+    set(FLTK_LIB_PREFIX ${CMAKE_CURRENT_LIST_DIR}/lib/msvc/x64/${CMAKE_BUILD_TYPE})
+elseif(MINGW)
+    set(FLTK_LIB_PREFIX ${CMAKE_CURRENT_LIST_DIR}/lib/mingw/x64)
+endif()
 
 if(WIN32)
     if(NOT CYGWIN)
@@ -12,6 +16,7 @@ if(WIN32)
     endif()
 endif()
 
+set(FLTK_MINGW_NAMES "fltk" "fltk_images" "fltk_gl" "fltk_forms")
 set(FLTK_MSVC_NAMES "fltk" "fltk_z" "fltk_jpeg" "fltk_images" "fltk_gl" "fltk_png" "fltk_forms")
 set(FLTK_MSVC_DEBUG_NAMES "fltkd" "fltk_zd" "fltk_jpegd" "fltk_imagesd" "fltk_gld" "fltk_pngd" "fltk_formsd")
 
@@ -21,9 +26,11 @@ if (MSVC)
     else()
         set(FLTK_NAMES ${FLTK_MSVC_NAMES})
     endif()
+elseif(MINGW)
+    set(FLTK_NAMES ${FLTK_MINGW_NAMES})
 endif()
 
-add_library(FLTK_LIBS empty.cpp)
-target_link_directories(FLTK_LIBS INTERFACE "${FLTK_LIB_PREFIX}/${CMAKE_BUILD_TYPE}")
+add_library(FLTK_LIBS empty.cxx)
+target_link_directories(FLTK_LIBS INTERFACE "${FLTK_LIB_PREFIX}")
 target_link_libraries(FLTK_LIBS INTERFACE ${FLTK_NAMES} ${FLTK_PLATFORM_DEPENDENT_LIBS})
 target_include_directories(FLTK_LIBS INTERFACE ${FLTK_INCLUDE_DIR})

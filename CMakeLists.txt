@@ -9,7 +9,7 @@ enable_testing()
 configure_file(config.h.in config.h)
 include_directories("${PROJECT_BINARY_DIR}")
 
-if (MSVC)
+if (WIN32)
 add_subdirectory(fltk)
 endif()
 
