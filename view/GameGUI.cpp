@@ -10,7 +10,7 @@ GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     RandomGenerate = new Fl_Button(xButton, yButtonRG, wButton, hButton, "Randomize");
     Clear = new Fl_Button(xButton, yButtonClear, wButton, hButton, "Clear");
     SingleStep = new Fl_Button(xButton, yButtonSS, wButton, hButton, "Single Step");
-    Continue = new Fl_Button(xButton, yButtonConti, wButton, hButton, "Continue");
+    Evolve = new Fl_Button(xButton, yButtonConti, wButton, hButton, "Evolve");
     Pause = new Fl_Button(xButton, yButtonPa, wButton, hButton, "Pause");
     Periodinput = new Fl_Float_Input(xButton+35, yPeriodInput, wButton-35, hButton, "Period(s)");
     Confirm = new Fl_Button(xButton, yConfirm, wButton, hButton, "Confirm");
@@ -23,7 +23,7 @@ GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     RandomGenerate->labelsize(20);
     Clear->labelsize(20);
     SingleStep->labelsize(20);
-    Continue->labelsize(20);
+    Evolve->labelsize(20);
     Pause->labelsize(20);
     Confirm->labelsize(20);
 
@@ -31,7 +31,7 @@ GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     RandomGenerate->labelfont(FL_BOLD);
     Clear->labelfont(FL_BOLD);
     SingleStep->labelfont(FL_BOLD);
-    Continue->labelfont(FL_BOLD);
+    Evolve->labelfont(FL_BOLD);
     Pause->labelfont(FL_BOLD);
     Confirm->labelfont(FL_BOLD);
     Periodinput->labelfont(FL_BOLD);
@@ -43,8 +43,8 @@ GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     Clear->color2(0xB0E0E600);
     SingleStep->color(0xAFEEEE00);
     SingleStep->color2(0xB0E0E600);
-    Continue->color(0xAFEEEE00);
-    Continue->color2(0xB0E0E600);
+    Evolve->color(0xAFEEEE00);
+    Evolve->color2(0xB0E0E600);
     Pause->color(0xAFEEEE00);
     Pause->color2(0xB0E0E600);
     Confirm->color(0xAFEEEE00);
@@ -54,7 +54,7 @@ GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     RandomGenerate->callback(Buttons_cb, &RandomCmd);
     Clear->callback(Buttons_cb, &ClearCmd);
     SingleStep->callback(Buttons_cb, &SingleStepCmd);
-    Continue->callback(StartTimer_cb, this);
+    Evolve->callback(StartTimer_cb, this);
     Pause->callback(PauseTimer_cb, this);
     Confirm->callback(Confirm_cb, this);
 

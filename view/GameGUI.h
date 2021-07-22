@@ -51,7 +51,7 @@ private:
     Fl_Button *RandomGenerate;
     Fl_Button *Clear;
     Fl_Button *SingleStep;
-    Fl_Button *Continue;
+    Fl_Button *Evolve;
     Fl_Button *Pause;
     Fl_PNG_Image *Picture;
     Fl_Box *Picbox;
