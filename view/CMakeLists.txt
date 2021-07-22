@@ -3,7 +3,7 @@
 
 add_library(view GameGUI.cpp ViewCells.cpp)
 
-if (MSVC)
+if (WIN32)
     target_link_libraries(view common FLTK_LIBS)
     target_include_directories(view
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} 
