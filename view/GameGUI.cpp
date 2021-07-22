@@ -1,10 +1,9 @@
 #include "GameGUI.h"
 
-
 GameGUI::GameGUI(int32_t width, int32_t height, const char *title):
     Fl_Double_Window(width, height, title)
 {   
-    Picture = new Fl_PNG_Image("life_game.png");
+    Picture = new Fl_PNG_Image("../assets/pics/life_game.png");
     color(0xFFFFFF00);
     Fl::set_boxtype(FL_FREE_BOXTYPE, cell_draw, 0, 0, 0, 0);
     begin();

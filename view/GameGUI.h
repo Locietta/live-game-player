@@ -8,7 +8,7 @@
 #include <FL/Fl_Double_Window.H>
 #include <FL/fl_draw.H>
 #include <FL/Fl_Button.H>
-#include <Fl/Fl_PNG_Image.H>
+#include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_Float_Input.H>
 #include <cstdlib>
 #include <iostream>
