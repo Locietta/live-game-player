@@ -23,18 +23,11 @@ add_executable(live_game main.cpp)
 target_link_libraries(live_game PUBLIC app)
 target_include_directories(live_game PUBLIC "${PROJECT_BINARY_DIR}")
 
-set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+include(InstallRequiredSystemLibraries)
+set(CPACK_PACKAGE_NAME "Live-Game-Player")
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 set(CPACK_PACKAGE_DIRECTORY ${PROJECT_SOURCE_DIR}/pack)
-set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
-set(CPACK_SOURCE_IGNORE_FILES
-        ${PROJECT_SOURCE_DIR}/build
-        ${PROJECT_SOURCE_DIR}/cmake-build-debug
-        ${PROJECT_SOURCE_DIR}/pack
-        ${PROJECT_SOURCE_DIR}/.idea
-        ${PROJECT_SOURCE_DIR}/.DS_Store
-        ${PROJECT_SOURCE_DIR}/.git
-        ${PROJECT_SOURCE_DIR}/.gitignore
-        ${PROJECT_SOURCE_DIR}/.vscode
-)
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.txt")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Live Game Player - Our simple life game simulator based on fltk")
+set(CPACK_PACKAGE_VENDOR "https://gitee.com/Locietta/live-game-player")
 include(CPack)
