@@ -1,6 +1,6 @@
 # 康威生命游戏
 
-[ on processing ]
+> ported from gitee
 
 ## 项目说明
 
