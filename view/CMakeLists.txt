@@ -20,5 +20,5 @@ endif()
 target_precompile_headers(view
     PRIVATE
     <FL/Fl.H> <FL/Fl_Box.H> <FL/Fl_Window.H> <FL/fl_draw.H> <FL/Fl_Button.H>
-    <FL/fl_draw.H> <FL/Fl_Float_Input.H> <Fl/Fl_PNG_Image.H>
+    <FL/fl_draw.H> <FL/Fl_Float_Input.H> <FL/Fl_PNG_Image.H>
 )
