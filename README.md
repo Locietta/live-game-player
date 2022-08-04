@@ -58,7 +58,7 @@ cmake --build build -j8  # 编译可执行文件到build文件下
 
 ## 小组分工
 
-王灵鑫：项目 Manager，管理持续集成、构建脚本和代码规范
+王灵鑫：项目 Manager，app代码装配，管理持续集成、构建脚本和代码规范
 
 陈德瀚：view模块，FLTK界面编写
 
